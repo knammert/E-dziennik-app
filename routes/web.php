@@ -21,3 +21,18 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group([
+    'prefix' => 'me',
+    'as' => 'me.'
+], function () {
+    Route::get('profile', 'UserController@profile')
+        ->name('profile');
+
+    Route::get('edit', 'UserController@edit')
+        ->name('edit');
+
+    Route::post('update', 'UserController@update')
+        ->name('update');
+
+});
