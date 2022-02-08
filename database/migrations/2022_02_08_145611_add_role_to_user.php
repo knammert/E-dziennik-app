@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClassNameSubjectsTable extends Migration
+class AddRoleToUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateClassNameSubjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('class_name_subjects', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('Users', function (Blueprint $table) {
+            $table->Integer('role');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateClassNameSubjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('class_name_subjects');
+        Schema::table('user', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
     }
 }

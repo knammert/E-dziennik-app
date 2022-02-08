@@ -109,12 +109,12 @@
             <span>Zarządzanie użytkownikami</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('adminPanel.subjects.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Tworzenie przedmiotów</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('adminPanel.class_names.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Tworzenie klas</span></a>
     </li>
