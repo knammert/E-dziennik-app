@@ -49,7 +49,7 @@ class UserController extends Controller
 
         // if ($user->delete()) {
 
-         return Redirect::route('/')->with('status', 'Your account has been deleted!');
+         return Redirect::route('/')->with('status', 'Konto zostało usunięte!');
         // }
     }
 

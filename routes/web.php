@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,4 +36,16 @@ Route::group([
     Route::post('update', 'UserController@update')
         ->name('update');
 
+
+    Route::post('update', 'UserController@update')
+    ->name('update');
+
+});
+
+Route::group([
+    'prefix' => 'adminPanel',
+    'as' => 'adminPanel.'
+], function () {
+    Route::resource('subjects', 'SubjectController');
+    Route::resource('class_names', 'Class_nameController');
 });
