@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \\App\Models\User::factory(10)->create();
-        for ($i=0; $i < 100; $i++) {
+        for ($i=0; $i < 3; $i++) {
             $this->call([
                 UserSeeder::class
 

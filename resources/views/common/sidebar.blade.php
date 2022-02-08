@@ -97,6 +97,11 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Tworzenie postów</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Statystyki</span></a>
+    </li>
 
        {{-- ADMINISTRATOR --}}
     <div class="sidebar-heading">
@@ -109,6 +114,11 @@
             <span>Zarządzanie użytkownikami</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('adminPanel.class_names.index') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Zarządzanie klasami</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('adminPanel.subjects.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Tworzenie przedmiotów</span></a>
@@ -117,16 +127,6 @@
         <a class="nav-link" href="{{ route('adminPanel.class_names.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Tworzenie klas</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Przypisywanie pracowników</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Przypisywanie uczniów</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="">

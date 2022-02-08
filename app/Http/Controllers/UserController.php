@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $users = User::latest()->paginate(10);
+
+        return view('adminPanel.users.index',compact('users'))
+             ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
 
     public function profile()
     {
@@ -52,6 +60,8 @@ class UserController extends Controller
          return Redirect::route('/')->with('status', 'Konto zostało usunięte!');
         // }
     }
+
+
 
 
 }

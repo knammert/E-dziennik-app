@@ -48,4 +48,6 @@ Route::group([
 ], function () {
     Route::resource('subjects', 'SubjectController');
     Route::resource('class_names', 'Class_nameController');
+
+    Route::get('users', 'UserController@index');
 });

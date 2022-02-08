@@ -11,4 +11,10 @@ class Class_name extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
+
 }
