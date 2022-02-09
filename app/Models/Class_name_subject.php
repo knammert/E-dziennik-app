@@ -9,7 +9,6 @@ class Class_name_subject extends Model
 {
     use HasFactory;
     protected $fillable = [
-
         'class_name_id',
         'subject_id',
         'user_id'

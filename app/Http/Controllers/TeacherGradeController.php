@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGradeRequest;
 use App\Models\Class_name_subject;
 use App\Models\Grade;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class TeacherGradeController extends Controller
 {
@@ -16,6 +19,7 @@ class TeacherGradeController extends Controller
      */
     public function index()
     {
+
         // $subjects = Grade::latest()->paginate(10);
         $user = Auth::user()->id;
         $activities = Class_name_subject::all()->where('user_id','==',$user);
@@ -43,9 +47,27 @@ class TeacherGradeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGradeRequest $request)
     {
-        //
+
+        $grade = new Grade();
+
+
+        $data = $request->validated();
+
+
+        $grade->user_id = $data['user'] ;
+        $grade->class_name_subject_id = $data['activity'] ;
+        $grade->grade = $data['grade'] ;
+        $grade->weight = $data['weight'] ;
+        $grade->comment = $data['comment'] ;
+        $grade->semestr = $data['semestr'] ;
+
+       $grade->save();
+
+        return redirect()
+            ->route('teacherPanel.grades.index')
+            ->with('status', 'Ocenę dodano pomyślnie');
     }
 
     /**
@@ -56,7 +78,7 @@ class TeacherGradeController extends Controller
      */
     public function show(Grade $grade)
     {
-        //
+
     }
 
     /**
@@ -91,5 +113,13 @@ class TeacherGradeController extends Controller
     public function destroy(Grade $grade)
     {
         //
+    }
+    public function changeStudentList($activity_id){
+
+        $class_id = Class_name_subject::find($activity_id)->class_name;
+
+        $users = User::all()->where('class_name_id','==',$class_id->id);
+
+         return response()->json($users);
     }
 }

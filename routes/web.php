@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherGradeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,4 +57,9 @@ Route::group([
     Route::resource('grades', 'TeacherGradeController');
 
     Route::get('users', 'UserController@index');
+
 });
+
+Route::get('changeStudentList/{id}', 'TeacherGradeController@changeStudentList');
+
+
