@@ -48,6 +48,7 @@ Route::group([
 ], function () {
     Route::resource('subjects', 'SubjectController');
     Route::resource('class_names', 'Class_nameController');
+    Route::resource('activities', 'Class_name_subjectController');
 
     Route::get('users', 'UserController@index');
 });

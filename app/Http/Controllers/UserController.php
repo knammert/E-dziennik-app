@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserProfile;
+use App\Models\Class_name;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +15,12 @@ class UserController extends Controller
     {
         $users = User::latest()->paginate(10);
 
-        return view('adminPanel.users.index',compact('users'))
-             ->with('i', (request()->input('page', 1) - 1) * 5);
+
+
+        // return view('adminPanel.users.index',compact('users','xd'))
+        //      ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('adminPanel.users.index', ['users' => $users])
+            ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
 

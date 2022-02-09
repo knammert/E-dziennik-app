@@ -109,29 +109,29 @@
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('adminPanel.') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Zarządzanie użytkownikami</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('adminPanel.class_names.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Zarządzanie klasami</span></a>
+            <span>Klasy</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('adminPanel.subjects.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Tworzenie przedmiotów</span></a>
+            <span>Przedmioty</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('adminPanel.class_names.index') }}">
+        <a class="nav-link" href="{{ route('adminPanel.activities.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Tworzenie klas</span></a>
+            <span>Zajęcia</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Tworzenie planu lekcji</span></a>
+            <span>Plan lekcji</span></a>
     </li>
 
 

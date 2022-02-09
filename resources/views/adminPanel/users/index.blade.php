@@ -40,7 +40,7 @@
                     </td>
                     <td>
                         @if (isset($user->class_name->name))
-                        {{ $user->class_name->name}}
+                            {{$user->class_name->name}}
                         @else
                         Brak przypisanej
                         @endif

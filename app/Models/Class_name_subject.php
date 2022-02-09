@@ -7,14 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Class_name_subject extends Model
 {
-    public function class_names(){
+    use HasFactory;
+    protected $fillable = [
 
-        return $this->hasMany(Class_name::class);
+        'class_name_id',
+        'subject_id',
+        'user_id'
+    ];
+
+
+    public function class_name()
+    {
+        return $this->belongsTo(Class_name::class);
     }
 
-    public function subjects(){
-
-        return $this->hasMany(Subject::class);
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

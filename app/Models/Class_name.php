@@ -16,5 +16,8 @@ class Class_name extends Model
     {
         return $this->hasMany(User::class);
     }
-
+    public function Class_name_subject()
+    {
+        return $this->hasMany(Class_name_subject::class);
+    }
 }
