@@ -73,9 +73,9 @@
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('teacherPanel.grades.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Wystawianie ocen</span></a>
+            <span>Oceny</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="">

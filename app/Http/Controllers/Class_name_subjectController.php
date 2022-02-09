@@ -18,10 +18,18 @@ class Class_name_subjectController extends Controller
     public function index()
     {
         $class_name_subjects = Class_name_subject::latest()->paginate(10);
+        $class_names = Class_name::all();
+        $subjects = Subject::all();
+        $users = User::all()->where('role','==','2');
 
 
-        return view('adminPanel.activities.index', ['class_name_subjects' => $class_name_subjects])
-            ->with('i', (request()->input('page', 1) - 1) * 5);;
+        return view('adminPanel.activities.index',
+        [
+        'class_name_subjects' => $class_name_subjects,
+        'class_names' => $class_names,
+        'subjects' => $subjects,
+        'users' => $users
+        ])  ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
     /**
@@ -32,11 +40,6 @@ class Class_name_subjectController extends Controller
     public function create()
     {
 
-        $class_names = Class_name::all();
-        $subjects = Subject::all();
-        $users = User::all()->where('role','==','2');
-
-        return view('adminPanel.activities.create',['class_names' => $class_names,'subjects' => $subjects,'users' => $users]);
     }
 
     /**

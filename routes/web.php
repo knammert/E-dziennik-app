@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -49,6 +45,15 @@ Route::group([
     Route::resource('subjects', 'SubjectController');
     Route::resource('class_names', 'Class_nameController');
     Route::resource('activities', 'Class_name_subjectController');
+
+    Route::get('users', 'UserController@index');
+});
+
+Route::group([
+    'prefix' => 'teacherPanel',
+    'as' => 'teacherPanel.'
+], function () {
+    Route::resource('grades', 'TeacherGradeController');
 
     Route::get('users', 'UserController@index');
 });
