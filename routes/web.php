@@ -56,7 +56,6 @@ Route::group([
 ], function () {
     Route::resource('grades', 'TeacherGradeController');
 
-    Route::get('users', 'UserController@index');
 
 });
 

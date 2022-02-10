@@ -8,6 +8,7 @@ use App\Models\Grade;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class TeacherGradeController extends Controller
@@ -17,18 +18,49 @@ class TeacherGradeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $phrase = $request->get('phrase');
+        $type = $request->get('type', 'all');
 
-        // $subjects = Grade::latest()->paginate(10);
-        $user = Auth::user()->id;
-        $activities = Class_name_subject::all()->where('user_id','==',$user);
+        $ActiceUser = Auth::user()->id;
+        $activities = Class_name_subject::all()->where('user_id','==',$ActiceUser);
 
+         if ($type != 'all') {
+            $activity = Class_name_subject::find($type);
+            $xd = $activity->id;
+            $users = User:: with('class_name')
+            ->with('grade')
+            ->orderBy('surname')
+            ->where('class_name_id', $activity->class_name_id)
+            ->paginate(10);
+
+            // $avrageMean=DB::table("grades")
+            // ->select("sum (grade * weight) / sum (weight) as rating_average")
+            // ->where("class_name_subject_id", "=", 14)
+            // ->where("user_id", "=", 171)
+            // ->get();
+            // dd($avrageMean);
+            //select sum(grade * weight) / sum(weight) as rating_average
+            //from grades WHERE class_name_subject_id = 14 AND user_id=171;
+
+         }
+         else {
+            $activity = Class_name_subject::where('user_id',$ActiceUser)->first();
+            $users = User:: with('class_name')
+            ->with('class_name_subject')
+            ->orderBy('surname')
+            ->with('grade')
+            ->where('class_name_id', $activity->class_name_id)
+            ->paginate(10);
+         }
 
         return view('teacherPanel.grades.index',
         [
         'activities' => $activities,
-        ])  ->with('i', (request()->input('page', 1) - 1) * 5);;
+        'users' => $users,
+        'activity'=> $activity,
+        ])  ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -52,9 +84,7 @@ class TeacherGradeController extends Controller
 
         $grade = new Grade();
 
-
         $data = $request->validated();
-
 
         $grade->user_id = $data['user'] ;
         $grade->class_name_subject_id = $data['activity'] ;
@@ -87,9 +117,21 @@ class TeacherGradeController extends Controller
      * @param  \App\Models\Grade  $grade
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grade $grade)
+    public function edit(Grade $grade,Request $request)
     {
-        //
+
+        $check = Class_name_subject::where('id',$request->activity_id)->first();
+
+            $user = User::where('id',$request->user_id)->first();
+            $grades = Grade::where('id_user',$request->user_id)
+            ->where('class_name_subject_id',$request->activity_id);
+
+
+        return view('teacherPanel.grades.edit',
+        [
+        'user' => $user,
+        'grades'=> $grades
+        ]) ;
     }
 
     /**
@@ -101,7 +143,22 @@ class TeacherGradeController extends Controller
      */
     public function update(Request $request, Grade $grade)
     {
-        //
+
+        $data=$request->validate([
+            'grade' => 'required',
+            'weight' => 'required',
+            'comment'=> 'required',
+            'semestr'=> 'required'
+        ]);
+
+        $grade->grade = $data['grade'] ;
+        $grade->weight = $data['weight'] ;
+        $grade->comment = $data['comment'] ;
+        $grade->semestr = $data['semestr'] ;
+        $grade->save();
+
+        return redirect()->route('teacherPanel.grades.index')
+                         ->with('status', 'Ocenna została zedytoowana pomyślnie');
     }
 
     /**

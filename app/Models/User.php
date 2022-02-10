@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Class_name_subject::class);
     }
+    public function grade()
+    {
+        return $this->hasMany(Grade::class);
+    }
 }
