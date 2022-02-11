@@ -15,8 +15,6 @@ class UserController extends Controller
     {
         $users = User::latest()->paginate(10);
 
-
-
         // return view('adminPanel.users.index',compact('users','xd'))
         //      ->with('i', (request()->input('page', 1) - 1) * 5);
         return view('adminPanel.users.index', ['users' => $users])
