@@ -13,8 +13,12 @@ class Subject extends Model
         'name'
     ];
 
-    public function Class_name_subject()
+    public function class_name_subject()
     {
-        return $this->hasMany(Class_name_subject::class);
+        return $this->belongsTo(Class_name_subject::class);
+    }
+    public function User()
+    {
+        return $this->belongsTo(User::class);
     }
 }

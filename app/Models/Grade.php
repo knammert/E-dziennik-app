@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grade extends Model
 {
-    public function users(){
+    public function user(){
 
         return $this->belongsTo(User::class);
     }
 
-    public function Class_name_subject(){
+    public function class_name_subject(){
 
         return $this->belongsTo(Class_name_subject::class);
     }

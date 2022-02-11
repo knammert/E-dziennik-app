@@ -55,8 +55,13 @@ Route::group([
     'as' => 'teacherPanel.'
 ], function () {
     Route::resource('grades', 'TeacherGradeController');
+});
 
-
+Route::group([
+    'prefix' => 'studentPanel',
+    'as' => 'studentPanel.'
+], function () {
+    Route::resource('grades', 'StudentGradeController');
 });
 
 Route::get('changeStudentList/{id}', 'TeacherGradeController@changeStudentList');

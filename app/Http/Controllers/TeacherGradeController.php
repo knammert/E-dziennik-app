@@ -21,28 +21,33 @@ class TeacherGradeController extends Controller
     public function index(Request $request)
     {
         $phrase = $request->get('phrase');
-        $type = $request->get('type', 'all');
+        $type = $request->get('type', 'default');
 
         $ActiceUser = Auth::user()->id;
         $activities = Class_name_subject::all()->where('user_id','==',$ActiceUser);
 
-         if ($type != 'all') {
+         if ($type != 'default') {
             $activity = Class_name_subject::find($type);
-            $xd = $activity->id;
             $users = User:: with('class_name')
             ->with('grade')
             ->orderBy('surname')
             ->where('class_name_id', $activity->class_name_id)
             ->paginate(10);
 
-            // $avrageMean=DB::table("grades")
-            // ->select("sum (grade * weight) / sum (weight) as rating_average")
-            // ->where("class_name_subject_id", "=", 14)
-            // ->where("user_id", "=", 171)
-            // ->get();
-            // dd($avrageMean);
-            //select sum(grade * weight) / sum(weight) as rating_average
-            //from grades WHERE class_name_subject_id = 14 AND user_id=171;
+            // $us = User:: with('class_name')
+            // ->with('grade')
+            // ->orderBy('surname')
+            // ->where('class_name_id', $activity->class_name_id)
+            // ->pluck('id')->toArray();
+
+
+            // $avgMean=DB::table("grades")
+            // ->select(DB::raw("SUM(grade * weight) / SUM(weight) as `rating_average`"))
+            // ->where("class_name_subject_id", "=", $type)
+            // ->whereIn("user_id",$us)
+            // ->toSql();
+            //  dd($avgMean);
+
 
          }
          else {
@@ -179,4 +184,9 @@ class TeacherGradeController extends Controller
 
          return response()->json($users);
     }
+
+
+
 }
+
+

@@ -29,4 +29,10 @@ class Class_name_subject extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function grade()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
+
 }

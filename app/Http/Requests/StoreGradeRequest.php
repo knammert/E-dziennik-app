@@ -42,6 +42,7 @@ class StoreGradeRequest extends FormRequest
                 'required',
             ],
             'comment' => [
+                'required',
             ],
         ];
     }
@@ -49,12 +50,12 @@ class StoreGradeRequest extends FormRequest
     public function messages()
     {
         return [
-            'user.required' => ' user_id Pole jest wymagane',
-            'activity.required' => ' class_name_subject_idPole jest wymagane',
-            'grade.required' => 'gradePole jest wymagane',
-            'weight.required' => 'weightPole jest wymagane',
-            'semestr.required' => 'semestr pole jest wymagane',
-            'comment.required' => 'comment jest wymagane',
+            'user.required' => 'Błąd podczas wprowadzania oceny: Należy wybrać studenta',
+            'activity.required' => 'Błąd podczas wprowadzania oceny: Należy wybrać aktywność',
+            'grade.required' => 'Błąd podczas wprowadzania oceny: Należy wybrać ocenę',
+            'weight.required' => 'Błąd podczas wprowadzania oceny: Należy wybrać wagę',
+            'semestr.required' => 'Błąd podczas wprowadzania oceny: Należy wybrać semestr',
+            'comment.required' => 'Błąd podczas wprowadzania oceny: Należy wprowadzić komentarz',
         ];
     }
 }

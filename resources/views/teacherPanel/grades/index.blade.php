@@ -23,7 +23,7 @@
                                 $type = $type ?? '';
                             @endphp
                             <div class="col-auto">
-                                <select class='custom-select mr-sm-2' name="type">
+                                <select class='custom-select mr-sm-2' name="type" id="type">
                                     @foreach ($activities as $activitie)
                                         <option value="{{$activitie->id}}"> Klasa: {{$activitie->class_name->name}} -- Przedmiot: {{$activitie->subject->name}}</option>
                                     @endforeach
@@ -72,10 +72,6 @@
                 <td>
                     @foreach ($user->grade as $obj)
                         @if ($obj->class_name_subject_id==$activity->id)
-                            {{-- <button href="{{ route('teacherPanel.grades.edit',$obj->id) }}" style="white-space: pre-line;"
-                                data-html="true" data-toggle="tooltip" data-placement="top"
-                                data-toggle="modal" data-target="#editGradeModal
-                            title="Waga: {{ $obj->weight }}  Komentarz: {{ $obj->comment }}">{{ $obj->grade }},</button> --}}
                             <span data-html="true"
                             data-toggle="tooltip"
                             data-placement="top"
@@ -85,12 +81,18 @@
                                 type="button"
                                 data-toggle="modal"
                                 data-target="#editGradeModal-{{$obj->id}}">
-                                    {{ $obj->grade }},
+                                @php
+                                    $grade = $obj->grade;
+                                    $order = array(".5", "1.75", "2.75", "3.75", "4.75", "5.75");
+                                    $replace = array("+", "2-", "3-", "4-", "5-", "6-" );
+                                    $newGrade = str_replace($order, $replace, $grade);
+                                @endphp
+                                   {{$newGrade}}
+                                    @if( !$loop->last)
+                                    ,
+                                    @endif
                                 </a>
                             </span>
-                            {{-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                                Wystawianie ocen
-                            </button> --}}
                         @endif
                     @endforeach
 
@@ -126,6 +128,7 @@
                             <div class="form-group">
                                 <strong>Zajęcia:</strong>
                                 <select type="text" name="activity" id="activity" class="form-control">
+                                    <option  selected value="0"> -- Wybierz zajęcia --</option>
                                     @foreach ($activities as $activitie)
                                         <option value="{{$activitie->id}}"> Klasa: {{$activitie->class_name->name}} -- Przedmiot: {{$activitie->subject->name}}</option>
                                     @endforeach
@@ -313,6 +316,13 @@
 
 <!-- Skrypt wczytywania studentów-->
 <script>
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if(urlParams.get('type')){
+        const type = urlParams.get('type');
+        document.getElementById('type').value = type;
+    }
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -323,7 +333,7 @@
             var activity_id = $(this).val();
 
            // console.log(activity_id);
-            if(activity_id) {
+            if(activity_id!=0) {
                 document.getElementById('user').disabled = false;
                 $.ajax({
                     url: '/changeStudentList/'+activity_id,
@@ -348,6 +358,7 @@
             }
             else{
             $('#user').empty();
+            document.getElementById('user').disabled = true;
             }
         });
     });
