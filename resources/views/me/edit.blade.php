@@ -10,9 +10,10 @@
     <div class="row g-0">
         <div class="col-md-8">
             <div class="card-body">
-                <form action="{{ route('me.update') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('me.update',$user->id) }}" method="post" enctype="multipart/form-data">
                     <!-- X-XSRF-TOKEN -->
                     @csrf
+                    @method('PUT')
                     <div class="form-group">
                         <label for="name">Imie</label>
                         <input
@@ -63,7 +64,7 @@
                         @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Zapisz dane</button>
-                    <a href="{{ route('me.profile') }}" class="btn btn-secondary">Anuluj</a>
+                    <a href="{{ route('me.index') }}" class="btn btn-secondary">Anuluj</a>
                 </form>
             </div>
         </div>

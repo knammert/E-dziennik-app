@@ -12,7 +12,7 @@
                 <p class="card-text">PESEL: {{$user->pesel}}</p>
                 <p class="card-text">
                     <small class="btn btn-light">
-                        <a href="{{route('me.edit')}}">Edytuj profil</a>
+                        <a href="{{route('me.edit',$user->id)}}">Edytuj profil</a>
                     </small>
                 </p>
         </div>

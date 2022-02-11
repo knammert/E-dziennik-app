@@ -28,7 +28,7 @@
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('me.profile') }}">
+        <a class="nav-link" href="{{ route('me.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Mój profil</span></a>
     </li>

@@ -18,52 +18,41 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['auth']], function() {
 
-Route::group([
-    'prefix' => 'me',
-    'as' => 'me.'
-], function () {
-    Route::get('profile', 'UserController@profile')
-        ->name('profile');
+    Route::resource('me', 'meController');
 
-    Route::get('edit', 'UserController@edit')
-        ->name('edit');
+    Route::group([
+        'prefix' => 'adminPanel',
+        'as' => 'adminPanel.'
+    ], function () {
+        Route::resource('subjects', 'SubjectController');
+        Route::resource('class_names', 'Class_nameController');
+        Route::resource('activities', 'Class_name_subjectController');
 
-    Route::post('update', 'UserController@update')
-        ->name('update');
+        Route::get('users', 'UserController@index');
+    });
+
+    Route::group([
+        'prefix' => 'teacherPanel',
+        'as' => 'teacherPanel.'
+    ], function () {
+        Route::resource('grades', 'TeacherGradeController');
+    });
+
+    Route::group([
+        'prefix' => 'studentPanel',
+        'as' => 'studentPanel.'
+    ], function () {
+        Route::resource('grades', 'StudentGradeController');
+    });
+
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('products', ProductController::class);
 
 
-    Route::post('update', 'UserController@update')
-    ->name('update');
+    Route::get('changeStudentList/{id}', 'TeacherGradeController@changeStudentList');
 
 });
-
-Route::group([
-    'prefix' => 'adminPanel',
-    'as' => 'adminPanel.'
-], function () {
-    Route::resource('subjects', 'SubjectController');
-    Route::resource('class_names', 'Class_nameController');
-    Route::resource('activities', 'Class_name_subjectController');
-
-    Route::get('users', 'UserController@index');
-});
-
-Route::group([
-    'prefix' => 'teacherPanel',
-    'as' => 'teacherPanel.'
-], function () {
-    Route::resource('grades', 'TeacherGradeController');
-});
-
-Route::group([
-    'prefix' => 'studentPanel',
-    'as' => 'studentPanel.'
-], function () {
-    Route::resource('grades', 'StudentGradeController');
-});
-
-Route::get('changeStudentList/{id}', 'TeacherGradeController@changeStudentList');
-
-
