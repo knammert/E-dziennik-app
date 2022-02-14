@@ -6,6 +6,7 @@ use App\Models\Class_name_subject;
 use App\Models\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StudentGradeController extends Controller
 {
@@ -18,15 +19,41 @@ class StudentGradeController extends Controller
     {
 
         $class_name_subjects = Class_name_subject::
-        whereHas('user', function($query) {
-            $query->where('id', '=', Auth::user()->id);
+        whereHas('class_name', function($query) {
+            $query->where('id', '=', Auth::user()->class_name_id);
         })
+        ->groupBy('id')
         ->paginate(10);
+
+        $activeUser = Auth::user()->id;
+        $activeClass = Auth::user()->class_name_id;
+
+
+
+        $avgGrades=DB::table(DB::raw('class_name_subjects c'))
+            ->select('c.id',DB::raw('IFNULL(SUM(g.grade * g.weight) / SUM(g.weight),NULL) as avg'))
+            ->leftJoin(DB::raw('grades g'),function($join) use($activeUser) {
+                $join->on('c.id','=','g.class_name_subject_id')
+                ->where('g.user_id','=', $activeUser);
+            })
+            ->where('class_name_id','=', Auth::user()->class_name_id)
+            ->groupBy('id')
+            ->paginate(10);
+
+
+        // $avgGrades=DB::table(DB::raw('users u'))
+        //     ->select('name','g.grade',DB::raw('IFNULL(SUM(g.grade * g.weight) / SUM(g.weight),NULL) as avg'))
+        //     ->leftJoin(DB::raw('grades g'),function($join) use($activity) {$join->on('u.id','=','g.user_id')
+        //     ->where('g.class_name_subject_id','=', $activity->id); })
+        //     ->where('u.class_name_id','=',$activity->class_name_id)
+        //     ->groupBy('u.surname')
+        //     ->paginate(5);
 
 
         return view('studentPanel.grades.index',
         [
-            'class_name_subjects'=>$class_name_subjects
+            'class_name_subjects'=>$class_name_subjects,
+            'avgGrades' =>$avgGrades
         ])  ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 

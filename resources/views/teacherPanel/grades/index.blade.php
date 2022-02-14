@@ -9,6 +9,7 @@
                     <h5>
                         Klasa: {{$activity->class_name->name}}
                         Przedmiot: {{$activity->subject->name}}
+
                     </h5>
                 </div>
                 <div class="float-right row mb-2">
@@ -98,12 +99,21 @@
 
                 </td>
                 <td>
-               {{$avgGrades[$loop->index]->avg}}
+                    @php
+                        $avg =   round($avgGrades[$loop->index]->avg,2);
+                    @endphp
+
+                    @if ($avg!=0)
+                    {{$avg}}
+                    @endif
                 </td>
                 <td>
                     @php
                     $predictedGrade = $avgGrades[$loop->index]->avg;
-                    if($predictedGrade<1.75){
+                    if( $predictedGrade ==null){
+                        $predictedGrade = 'Brak ocen';
+                    }
+                    else if($predictedGrade<1.75){
                         $predictedGrade = 'Niedostateczny';
                     }
                     else if($predictedGrade<2.75){
@@ -389,6 +399,6 @@
 
     $(function () {
     $('[data-toggle="tooltip"]').tooltip()
-})
+        })
 </script>
 @endsection
