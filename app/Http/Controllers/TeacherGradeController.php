@@ -7,8 +7,10 @@ use App\Models\Class_name_subject;
 use App\Models\Grade;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 
 class TeacherGradeController extends Controller
@@ -20,6 +22,14 @@ class TeacherGradeController extends Controller
      */
     public function index(Request $request)
     {
+        //  Test bramek
+        //Metoda 1
+            // if (! Gate::allows('admin-level')) {
+            //     abort(403);
+            // }
+        //Metoda 1
+            // Gate::authorize('admin-level');
+
         $phrase = $request->get('phrase');
         $type = $request->get('type', 'default');
 
@@ -27,44 +37,40 @@ class TeacherGradeController extends Controller
         $activities = Class_name_subject::all()->where('user_id','==',$ActiceUser);
 
          if ($type != 'default') {
-            $activity = Class_name_subject::find($type);
-            $users = User:: with('class_name')
-            ->with('grade')
-            ->orderBy('surname')
-            ->where('class_name_id', $activity->class_name_id)
+             $activity = Class_name_subject::find($type);
+             $users = User::orderBy('surname')
+             ->where('class_name_id', $activity->class_name_id)
+             ->paginate(10);
+
+            $avgGrades=DB::table(DB::raw('users u'))
+            ->select('name','g.grade',DB::raw('IFNULL(SUM(g.grade * g.weight) / SUM(g.weight),NULL) as avg'))
+            ->leftJoin(DB::raw('grades g'),function($join) use($activity) {$join->on('u.id','=','g.user_id')
+            ->where('g.class_name_subject_id','=', $activity->id); })
+            ->where('u.class_name_id','=',$activity->class_name_id)
+            ->groupBy('u.surname')
             ->paginate(10);
-
-            // $us = User:: with('class_name')
-            // ->with('grade')
-            // ->orderBy('surname')
-            // ->where('class_name_id', $activity->class_name_id)
-            // ->pluck('id')->toArray();
-
-
-            // $avgMean=DB::table("grades")
-            // ->select(DB::raw("SUM(grade * weight) / SUM(weight) as `rating_average`"))
-            // ->where("class_name_subject_id", "=", $type)
-            // ->whereIn("user_id",$us)
-            // ->toSql();
-            //  dd($avgMean);
-
-
          }
          else {
             $activity = Class_name_subject::where('user_id',$ActiceUser)->first();
             $users = User:: with('class_name')
-            ->with('class_name_subject')
             ->orderBy('surname')
-            ->with('grade')
             ->where('class_name_id', $activity->class_name_id)
             ->paginate(10);
-         }
 
+            $avgGrades=DB::table(DB::raw('users u'))
+            ->select('name','g.grade',DB::raw('IFNULL(SUM(g.grade * g.weight) / SUM(g.weight),NULL) as avg'))
+            ->leftJoin(DB::raw('grades g'),function($join) use($activity) {$join->on('u.id','=','g.user_id')
+            ->where('g.class_name_subject_id','=', $activity->id); })
+            ->where('u.class_name_id','=',$activity->class_name_id)
+            ->groupBy('u.surname')
+            ->paginate(10);
+         }
         return view('teacherPanel.grades.index',
         [
         'activities' => $activities,
         'users' => $users,
         'activity'=> $activity,
+        'avgGrades'=>$avgGrades
         ])  ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 

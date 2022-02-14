@@ -59,18 +59,18 @@
                 <th>Nr</th>
                 <th>Imię</th>
                 <th>Nazwisko</th>
-                <th>PESEL</th>
                 <th>Oceny</th>
                 <th>Średnia ocen</th>
+                <th>Przewidywana ocena roczna</th>
             </tr>
             @foreach ($users as $user)
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->surname }}</td>
-                <td>{{ $user->pesel }}</td>
                 <td>
                     @foreach ($user->grade as $obj)
+
                         @if ($obj->class_name_subject_id==$activity->id)
                             <span data-html="true"
                             data-toggle="tooltip"
@@ -98,8 +98,32 @@
 
                 </td>
                 <td>
-                Średnia
+               {{$avgGrades[$loop->index]->avg}}
                 </td>
+                <td>
+                    @php
+                    $predictedGrade = $avgGrades[$loop->index]->avg;
+                    if($predictedGrade<1.75){
+                        $predictedGrade = 'Niedostateczny';
+                    }
+                    else if($predictedGrade<2.75){
+                        $predictedGrade = 'Dopuszczający ';
+                    }
+                    else if($predictedGrade<3.75){
+                        $predictedGrade = 'Dostateczny ';
+                    }
+                    else if($predictedGrade<4.75){
+                        $predictedGrade = 'Dobry ';
+                    }
+                    else if($predictedGrade<5.75){
+                        $predictedGrade = 'Bardzo dobry';
+                    }
+                    else{
+                        $predictedGrade = 'Celujący ';
+                    }
+                    @endphp
+                         {{$predictedGrade}}
+                 </td>
 
             </tr>
             @endforeach

@@ -27,7 +27,26 @@
                 <td>
                     @foreach ($class_name_subject->grade as $obj)
                         @if ($obj->class_name_subject_id==$class_name_subject->id && $obj->user_id == Auth::user()->id)
-                            {{$obj->grade}}
+                            <span data-html="true"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            data-toggle="modal"
+                            title="Waga: {{ $obj->weight }} | Komentarz: {{ $obj->comment }} | Semestr: {{ $obj->semestr }} ">
+                                <a
+                                type="button"
+                                data-toggle="modal"
+                                data-target="#editGradeModal-{{$obj->id}}">
+                                @php
+                                    $grade = $obj->grade;
+                                    $order = array(".5", "1.75", "2.75", "3.75", "4.75", "5.75");
+                                    $replace = array("+", "2-", "3-", "4-", "5-", "6-" );
+                                    $newGrade = str_replace($order, $replace, $grade);
+                                @endphp
+                                {{$newGrade}}
+                                    @if( !$loop->last)
+                                    ,
+                                    @endif
+                                </a>
                         @endif
                     @endforeach
                 </td>
@@ -39,6 +58,34 @@
             @endforeach
         </table>
         <div class="d-flex justify-content-center">
-        {{-- {!! $subjects->links() !!} --}}
+        {!! $class_name_subjects->links() !!}
         </div>
+
+@foreach ($class_name_subjects as $class_name_subject)
+    @foreach ($class_name_subjects as $class_name_subject)
+        @if ($obj->class_name_subject_id==$class_name_subject->id && $obj->user_id == Auth::user()->id)
+                <div class="modal fade" id="editGradeModal-{{$obj->id}}" tabindex="-1" role="dialog" aria-labelledby="editGradeModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editGradeModal">Szczegóły oceny</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="modal-body">
+                                        <p>Imię: {{$user->name}}</p>
+                                        <p>Nazwisko: {{$user->surname}}</p>
+                                        <p>Data dodania: {{$obj->created_at}}</p>
+                                        <p>Ostatnio modyfikowana: {{$obj->updated_at}}</p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    @endforeach
+
     @endsection
