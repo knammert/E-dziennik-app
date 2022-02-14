@@ -17,6 +17,42 @@
             </div>
         </div>
 
+
+        <table  class="table table-bordered">
+            <tr>
+                <th>Nr</th>
+                <th>Nazwa przedmiotu</th>
+                <th>Klasa</th>
+                <th>Przypisany nauczyciel</th>
+                <th>Dzień tygodnia</th>
+                <th>Data rozpoczęcia</th>
+                <th>Data zakończenia</th>
+                <th width="280px">Akcja</th>
+            </tr>
+            @foreach ($class_name_subjects as $class_name_subject)
+            <tr>
+                <td>{{ ++$i }}</td>
+                <td>{{ $class_name_subject->class_name->name }}</td>
+                <td>{{ $class_name_subject->subject->name }}</td>
+                <td>{{ $class_name_subject->user->name }} {{ $class_name_subject->user->surname }}</td>
+                <td>{{ $class_name_subject->weekday }}</td>
+                <td>{{ $class_name_subject->start_time }}</td>
+                <td>{{ $class_name_subject->end_time }}</td>
+                <td>
+
+                    <form action="{{ route('adminPanel.activities.destroy',$class_name_subject->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Usuń zajęcia</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+        <div class="d-flex justify-content-center">
+        {!! $class_name_subjects->links() !!}
+        </div>
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -54,42 +90,50 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <strong>Dzień tygodnia:</strong>
+                                        <select
+                                            type="text"
+                                            class="form-control @error('weekday') is-invalid @enderror"
+                                            id="weekday"
+                                            name="weekday">
+                                            <option value="1">Poniedziałek</option>
+                                            <option value="2">Wtorek</option>
+                                            <option value="3">Środa</option>
+                                            <option value="4">Czawartek</option>
+                                            <option value="5">Piątek</option>
+                                            <option value="6">Sobota</option>
+                                            <option value="7">Niedziela</option>
+                                    </select>
+                                    <div class="form-group">
+                                        <strong>Godzina rozpoczęcia:</strong>
+                                        <input class="form-control lesson-timepicker {{ $errors->has('start_time') ? 'is-invalid' : '' }}"
+                                        type="time" name="start_time" id="start_time" value="{{ old('start_time') }}" required>
+                                        @if($errors->has('start_time'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('start_time') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <strong>Godzina zakończenia:</strong>
+                                        <input class="form-control lesson-timepicker {{ $errors->has('end_time') ? 'is-invalid' : '' }}"
+                                        type="time" name="end_time" id="end_time" value="{{ old('end_time') }}" required>
+                                        @if($errors->has('end_time'))
+                                            <div class="invalid-feedback">
+                                                {{ $errors->first('end_time') }}
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                                        <button type="submit" class="btn btn-primary">Dodaj nową klasę</button>
+                                        <button type="submit" class="btn btn-primary">Dodaj nowe zajęcia</button>
                                     </div>
                             </form>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <table  class="table table-bordered">
-            <tr>
-                <th>Nr</th>
-                <th>Nazwa przedmiotu</th>
-                <th>Klasa</th>
-                <th>Przypisany nauczyciel</th>
-                <th width="280px">Akcja</th>
-            </tr>
-            @foreach ($class_name_subjects as $class_name_subject)
-            <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $class_name_subject->class_name->name }}</td>
-                <td>{{ $class_name_subject->subject->name }}</td>
-                <td>{{ $class_name_subject->user->name }} {{ $class_name_subject->user->surname }}</td>
-                <td>
-
-                    <form action="{{ route('adminPanel.activities.destroy',$class_name_subject->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Usuń zajęcia</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </table>
-        <div class="d-flex justify-content-center">
-        {!! $class_name_subjects->links() !!}
         </div>
     @endsection

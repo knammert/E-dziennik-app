@@ -53,7 +53,10 @@ class Class_name_subjectController extends Controller
         $request->validate([
             'class_name_id' => 'required',
             'subject_id' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'weekday' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required'
         ]);
 
         Class_name_subject::create($request->all());

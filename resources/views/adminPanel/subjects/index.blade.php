@@ -31,8 +31,9 @@
                             @csrf
                                 <div class="form-group">
                                     <strong>Nazwa przedmiotu:</strong>
-                                    <input type="text" name="name" class="form-control">
+                                    <input type="text" name="name" class="form-control @error('weekday') is-invalid @enderror">
                                 </div>
+
                         </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>

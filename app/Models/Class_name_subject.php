@@ -11,9 +11,21 @@ class Class_name_subject extends Model
     protected $fillable = [
         'class_name_id',
         'subject_id',
-        'user_id'
+        'user_id',
+        'weekday',
+        'start_time',
+        'end_time'
     ];
 
+    const WEEK_DAYS = [
+        '1' => 'Poniedziałek',
+        '2' => 'Wtorek',
+        '3' => 'Środa',
+        '4' => 'Czawartek',
+        '5' => 'Piatek',
+        '6' => 'Sobota',
+        '7' => 'Niedziela',
+    ];
 
     public function class_name()
     {

@@ -53,7 +53,7 @@
                 </td>
                 <td>
                     @php
-                        $avg =   round($avgGrades[$loop->index]->avg,2);
+                        $avg = round($avgGrades[$loop->index]->avg,2);
                     @endphp
                     @if ($avg!=0)
                     {{$avg}}
