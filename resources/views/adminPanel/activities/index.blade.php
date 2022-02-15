@@ -21,8 +21,8 @@
         <table  class="table table-bordered">
             <tr>
                 <th>Nr</th>
-                <th>Nazwa przedmiotu</th>
                 <th>Klasa</th>
+                <th>Nazwa przedmiotu</th>
                 <th>Przypisany nauczyciel</th>
                 <th>Dzień tygodnia</th>
                 <th>Data rozpoczęcia</th>

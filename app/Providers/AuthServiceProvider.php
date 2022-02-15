@@ -28,10 +28,26 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('admin-level', function (User $user){
 
-            if($user->role !=3){
-                return false;
-            }
+            if($user->role ==1){
                 return true;
+            }
+                return false;
+        });
+
+        Gate::define('teacher-level', function (User $user){
+
+            if($user->role ==1){
+                return true;
+            }
+                return false;
+        });
+
+        Gate::define('student-level', function (User $user){
+
+            if($user->role ==1){
+                return true;
+            }
+                return false;
         });
 
     }

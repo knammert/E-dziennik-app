@@ -58,4 +58,29 @@ class User extends Authenticatable
     {
         return $this->hasMany(Grade::class);
     }
+
+
+    public function getIsAdminAttribute()
+    {
+        if($xd = $this->role == 3){
+            return true;
+        }
+        return false;
+    }
+
+    public function getIsTeacherAttribute()
+    {
+        if($xd = $this->role == 2){
+            return true;
+        }
+        return false;
+    }
+
+    public function getIsStudentAttribute()
+    {
+        if($xd = $this->role == 1){
+            return true;
+        }
+        return false;
+    }
 }

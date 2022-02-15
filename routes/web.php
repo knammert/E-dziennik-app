@@ -22,6 +22,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('me', 'meController');
+    Route::get('calendar', 'CalendarController@index')->name('calendarIndex');
 
     Route::group([
         'prefix' => 'adminPanel',
@@ -48,9 +49,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('grades', 'StudentGradeController');
     });
 
-    Route::resource('roles', RoleController::class);
+   // Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
-    Route::resource('products', ProductController::class);
 
 
     Route::get('changeStudentList/{id}', 'TeacherGradeController@changeStudentList');
