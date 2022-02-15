@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserByAdminRequest;
 use App\Http\Requests\UpdateUserProfile;
 use App\Models\Class_name;
 use App\Models\User;
@@ -15,55 +16,44 @@ class UserController extends Controller
     {
         $users = User::latest()->paginate(10);
 
+        $classes = Class_name::all();
 
-
-        // return view('adminPanel.users.index',compact('users','xd'))
-        //      ->with('i', (request()->input('page', 1) - 1) * 5);
-        return view('adminPanel.users.index', ['users' => $users])
+        return view('adminPanel.users.index', ['users' => $users, 'classes'=> $classes])
             ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
 
     public function profile()
     {
-        return view('me.profile', [
-            'user' => Auth::user()
-        ]);
+
     }
 
     public function edit()
     {
-        return view('me.edit', [
-            'user' => Auth::user()
-        ]);
+
     }
 
-    public function update(UpdateUserProfile $request,User $user)
+    public function update(UpdateUserByAdminRequest $request, User $user)
     {
-        $user = Auth::user();
+
         $data = $request->validated();
 
-        $user->name = $data['name'] ?? $user->name;
-        $user->surname = $data['surname'] ?? $user->surname;
-        $user->email = $data['email'] ?? $user->email;
-        $user->pesel = $data['pesel'] ?? $user->pesel;
+        $user->role = $data['role'] ?? $user->role;
+        $user->class_name_id = $data['class_name_id'] ?? $user->class_name_id;
         $user->save();
 
         return redirect()
-            ->route('me.profile')
+            ->route('users.index')
             ->with('status', 'Profil został zaktualizowany');
     }
 
-    public function delete()
+    public function delete(Request $request)
     {
         $user = User::find(Auth::user()->id);
 
-        Auth::logout();
-
-        // if ($user->delete()) {
 
          return Redirect::route('/')->with('status', 'Konto zostało usunięte!');
-        // }
+
     }
 
 

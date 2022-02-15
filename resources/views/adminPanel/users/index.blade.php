@@ -7,6 +7,8 @@
                 <div class="float-left">
                     <h2>Użytkownicy</h2>
                 </div>
+            </div>
+        </div>
 
         <table class="table">
             <thead class="thead-light">
@@ -32,10 +34,12 @@
                     <td>
                         @if ( $user->role ==0)
                             Brak roli
-                        @elseif ( $user->role ==1)
+                        @elseif ( $user->role == 1)
                             Uczeń
-                        @elseif ( $user->role ==2)
+                        @elseif ( $user->role == 2)
                             Nauczyciel
+                        @elseif ( $user->role ==  3)
+                        Administrator
                         @endif
                     </td>
                     <td>
@@ -46,18 +50,99 @@
                         @endif
 
                     </td>
-                    <td>
+                    <td class="row">
+                        <a
+                        type="submit"
+                        class="btn btn-warning mr-1"
+                        data-toggle="modal"
+                        data-target="#editUserModal-{{$user->id}}">
+                        Edytuj
+                    </a>
+
                         <form action="{{ route('adminPanel.subjects.index',$user->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Usuń użytkownika</button>
+                            <button type="submit" class="btn btn-danger">Usuń</button>
                         </form>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+
         <div class="d-flex justify-content-center">
-        {!! $users->links() !!}
+            {!! $users->links() !!}
         </div>
+        {{-- Modal --}}
+        @foreach ($users as $user)
+        <div class="modal fade" id="editUserModal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="editUserModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserModal">Edycja użytkownika</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                            <div class="modal-body">
+                                <p>Imię: {{$user->name}}</p>
+                                <p>Nazwisko: {{$user->surname}}</p>
+                                <p>Email: {{$user->email}}</p>
+                                <p>PESEL: {{$user->pesel}}</p>
+                                <p>Data rejestracji: {{$user->created_at}}</p>
+                                <p>Ostatnio modyfikowany: {{$user->updated_at}}</p>
+
+                                <form action="{{ route('users.update',$user->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-group">
+                                    <strong>Rola:</strong>
+                                    <select type="text" name="role" id="role" class="form-control">
+                                        <option @if ($user->role =='0') selected @endif value="1">Brak roli</option>
+                                        <option @if ($user->role =='1') selected @endif value="1">Uczeń</option>
+                                        <option @if ($user->role =='2') selected @endif value="2">Nauczyciel</option>
+                                        <option @if ($user->role =='3') selected @endif value="3">Administrator</option>
+                                        @error('role')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <strong>Klasa:</strong>
+                                    <select type="text" name="class_name_id" id="class_name_id" class="form-control">
+                                        <option @if ($user->class_name_id =='0') selected @endif value="0">Brak klasy</option>
+                                        @foreach ($classes as $class )
+                                            <option @if ($user->class_name_id == $class->id) selected @endif value="{{$class->id}}">{{$class->name}}</option>
+                                        @endforeach
+
+                                        @error('class_name_id')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </select>
+
+                                </div>
+                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                                </form>
+                         </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+        <script>
+            document.getElementById('class_name_id').disabled = true;
+
+        $('#role').on('change', function() {
+            var role_id = $(this).val();
+            document.getElementById('class_name_id').disabled = true;
+            console.log('xd');
+            if(role_id == 1){
+                document.getElementById('class_name_id').disabled = false;
+            }
+
+        });
+        </script>
     @endsection
