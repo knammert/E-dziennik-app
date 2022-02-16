@@ -51,6 +51,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('dashboard', 'PostController');
     Route::get('dashboard/{id}', 'PostController@show');
+    Route::post('dashboard/{id}', 'PostController@destroy');
+
 
 
     Route::resource('users', UserController::class);

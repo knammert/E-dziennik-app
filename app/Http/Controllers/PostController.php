@@ -59,9 +59,8 @@ class PostController extends Controller
 
         $post->save();
 
-        return view('posts.index', [
-
-        ]);
+        return redirect()
+        ->route('dashboard.index');
     }
 
     /**
@@ -108,8 +107,17 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+
+        $post = Post::find($id);
+        $filename = $post->image_path;
+
+        $path = public_path()."/uploads/".$post->image_path;
+        unlink($path);
+
+        $post->delete();
+
+        return redirect()->route('dashboard.index');
     }
 }

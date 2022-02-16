@@ -13,9 +13,17 @@
                         <!-- Post title-->
                         <h1 class="fw-bolder mb-1 ">{{$post->title}}</h1>
                         <!-- Post meta content-->
-                        <div class="text-muted fst-italic mb-2">Dodano {{$post->created_at}}</div>
+                        <div class="text-muted fst-italic mb-2">Dodano {{$post->created_at}} przez {{$post->user->name}} {{$post->user->surname}} </div>
                         <!-- Post categories-->
+
                     </header>
+                    @if (Auth::user()->id==$post->user_id )
+                    <form action="{{ route('dashboard.destroy',$post->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-link">Usuń post</button>
+                    </form>
+                    @endif
                     <!-- Preview image figure-->
                     <figure class="mb-4"><img class="img-fluid rounded" src="{{ URL::asset("uploads/{$post->image_path}")}}" alt="..." /></figure>
                     <!-- Post content-->
@@ -23,7 +31,9 @@
                         {{$post->description}}
                     </section>
                 </article>
-                <a href="{{ route('dashboard.index') }}" >Powrót</a>
+                    <div class="row ml-2">
+                        <a href="{{ route('dashboard.index') }}" >Powrót</a>
+                    </div>
             </div>
         </div>
     </div>
