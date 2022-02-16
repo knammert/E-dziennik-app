@@ -2,13 +2,40 @@
 
 @section('contentPage')
 
-        <div class="row">
-            <div class="col-lg-12 margin-tb">
-                <div class="float-left">
-                    <h2>Użytkownicy</h2>
-                </div>
+<div class="float-left">
+    <h2>Użytkownicy</h2>
+
+</div>
+<div class="float-right row mb-2 mr-2">
+    <form class="form-inline" action="{{ route('users.index') }}">
+        <div class="form-row">
+            <label class="my-1 mr-2" for="phrase">Szukaj użytkownika:</label>
+            <div class="col">
+                <input type="text" class="form-control" name="phrase" placeholder="" value="{{ $phrase ?? '' }}">
             </div>
+            @php
+                $type = $type ?? '';
+            @endphp
+            <div class="col-auto">
+                <select class='custom-select mr-sm-2' name="type" id="type">
+                       <option value="0"> Wszyscy</option>
+                        <option value="4"> Brak roli</option>
+                        <option value="1"> Uczeń</option>
+                        <option value="2"> Nauczyciel</option>
+                        <option value="3"> Administrator</option>
+
+                </select>
+            </div>
+            <button class="btn btn-primary" type="sumbit">Wyszukaj</button>
         </div>
+    </form>
+
+        <div class="form-row ml-2 ">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                Wystawianie ocen
+            </button>
+        </div>
+</div>
 
         <table class="table shadow-lg p-3 mb-5 bg-white rounded" >
             <thead class="thead-light">

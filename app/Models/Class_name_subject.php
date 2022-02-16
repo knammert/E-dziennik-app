@@ -71,7 +71,6 @@ class Class_name_subject extends Model
                     $query->where('class_name_id', request()->input('typeClassId'));
                  });
         });
-
     }
 
 }

@@ -12,11 +12,16 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->paginate(10);
+       // $users = User::latest()->paginate(10);
 
         $classes = Class_name::all();
+
+        $users   = User::usersByRoleOrName()
+        ->paginate(10);
+
+
 
         return view('adminPanel.users.index', ['users' => $users, 'classes'=> $classes])
             ->with('i', (request()->input('page', 1) - 1) * 5);;

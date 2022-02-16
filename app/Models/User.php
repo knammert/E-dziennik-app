@@ -88,4 +88,22 @@ class User extends Authenticatable
         }
         return false;
     }
+
+
+    public function scopeUsersByRoleOrName($query)
+    {
+        return $query->when(request()->input('type'), function ($query) {
+            if(request('type')==4){
+                $query->where('role', 0);
+            }
+            else{
+                $query->where('role', request('type'));
+            }
+
+
+        })->when(request()->input('phrase'), function ($query) {
+            $phrase = request('phrase');
+            $query->whereRaw('name like ?', ["$phrase%"]);
+         });
+    }
 }
