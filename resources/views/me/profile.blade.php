@@ -2,7 +2,7 @@
 
 @section('contentPage')
 
-<div class="card mb-3 mt-3 " >
+<div class="card mb-3 mt-3 shadow-lg p-3 mb-5 bg-white rounded " >
     <div class="row g-0">
       <div class="col-md-8">
         <div class="card-body">

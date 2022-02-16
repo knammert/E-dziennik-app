@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <table class="table">
+        <table class="table shadow-lg p-3 mb-5 bg-white rounded" >
             <thead class="thead-light">
             <tr>
                 <th>Nr</th>

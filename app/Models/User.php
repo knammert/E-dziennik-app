@@ -59,6 +59,11 @@ class User extends Authenticatable
         return $this->hasMany(Grade::class);
     }
 
+    public function post()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 
     public function getIsAdminAttribute()
     {

@@ -2,12 +2,13 @@
 
 @section('contentPage')
 
-<div class="card mb-3 mt-3 " >
+
+<div class="card mb-3 mt-3 shadow-lg p-3 mb-5 bg-white rounded " >
     <div class="alert alert-warning" role="alert">
         Uwaga zmiana danych łączy się z utratą dostępu do serwisu do czasu weryfikacji przez administratora
     </div>
 
-    <div class="row g-0">
+    <div class="row g-0 ">
         <div class="col-md-8">
             <div class="card-body">
                 <form action="{{ route('me.update',$user->id) }}" method="post" enctype="multipart/form-data">

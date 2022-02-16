@@ -55,7 +55,7 @@
 
 
 
-        <table class="table table-bordered">
+        <table class="table table-bordered shadow-lg p-3 mb-5 bg-white rounded">
             <tr>
                 <th>Nr</th>
                 <th>Imię</th>

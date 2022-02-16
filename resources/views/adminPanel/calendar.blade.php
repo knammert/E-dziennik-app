@@ -28,8 +28,8 @@
             </div>
         @endif
 
-    <table class="table " style='border-collapse: separate;
-    border-spacing: 0.15em;'>
+    <table class="table shadow-lg p-3 mb-5 bg-white rounded " style='border-collapse: separate;
+    border-spacing: 0.1em;' >
         <thead class='thead-light'>
             <th width="125">Czas</th>
             @foreach($weekDays as $day)

@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="{{ route('dashboard.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Panel główny</span></a>
     </li>
@@ -22,7 +22,7 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
+    {{-- <!-- Heading -->
     <div class="sidebar-heading">
         Profil
     </div>
@@ -41,11 +41,29 @@
         <a class="nav-link" href="">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Usuwanie konta</span></a>
-    </li>
+    </li> --}}
+
+
     {{-- UCZEŃ --}}
     <div class="sidebar-heading">
         Uczeń
     </div>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Zarządzanie profilem</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('me.index') }}">Mój profil</a>
+                <a class="collapse-item" href="{{ route('me.index') }}">Edycja danych</a>
+                <a class="collapse-item" href="{{ route('me.index') }}">Zmiana hasła</a>
+                <a class="collapse-item" href="{{ route('me.index') }}">Usuwanie konta</a>
+        </div>
+    </li>
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('studentPanel.grades.index') }}">
@@ -82,7 +100,7 @@
             <span>Plan lekcji</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('dashboard.create') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Tworzenie postów</span></a>
     </li>
@@ -116,16 +134,6 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Plan lekcji</span></a>
     </li>
-
-
-
-
-
-
-
-
-
-
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('me', 'meController');
@@ -49,7 +49,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('grades', 'StudentGradeController');
     });
 
-   // Route::resource('roles', RoleController::class);
+    Route::resource('dashboard', 'PostController');
+    Route::get('dashboard/{id}', 'PostController@show');
+
+
     Route::resource('users', UserController::class);
 
 
