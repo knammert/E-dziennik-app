@@ -22,14 +22,14 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button class="btn btn-primary" type="sumbit">Wyszukaj</button>
+                        <button class="btn btn-primary mr-3" type="sumbit">Wyszukaj</button>
                     </div>
                 </form>
             </div>
         @endif
 
-    <table class="table shadow-lg p-3 mb-5 bg-white rounded " style='border-collapse: separate;
-    border-spacing: 0.1em;' >
+    <table class="table shadow-lg p-3 mb-5 bg-white" style='border-collapse: separate;'>
+
         <thead class='thead-light'>
             <th width="125">Czas</th>
             @foreach($weekDays as $day)
@@ -37,15 +37,25 @@
             @endforeach
         </thead >
         <tbody>
+            @php
+                $i=0;
+            @endphp
             @foreach($calendarData as $time => $days)
-                <tr>
+                <tr >
                     <td class="table-light">
                     <b> {{ $time }}</b>
-
                     @foreach($days as $value)
                         @if (is_array($value))
+                        @php
+                            $i++;
+                            if($i==4 && $value != 1){
+                                $i=0;
+                            }
+                            $background_colors = array('#037bfc', '#fca503', '#b103fc', '#ed6d05', '#fc0356');
+                            $rand_background = $background_colors[$i];
+                        @endphp
                             <td rowspan="{{ $value['rowspan'] }}" class="align-middle text-center text-white "
-                            style="border-radius: 10px; background-color:#4e72dfb2">
+                            style="border-radius: 20px; 40px; background-color:{{$rand_background}}; opacity:0.8;">
                                 Przedmiot: {{ $value['subject_name'] }}<br>
                                 @if (Auth::user()->role == 1)
                                 Nauczyciel: {{ $value['teacher_name']}} {{$value['teacher_surname'] }}
@@ -57,7 +67,7 @@
                                 @endif
                             </td>
                         @elseif ($value === 1)
-                            <td></td>
+                            <td ></td>
                         @endif
                     @endforeach
                 </tr>

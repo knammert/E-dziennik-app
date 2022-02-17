@@ -39,7 +39,7 @@
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="email">Adres email</label>
                         <input
                             type="email"
@@ -51,7 +51,7 @@
                         @error('email')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="pesel">PESEL</label>
                         <input
@@ -62,6 +62,19 @@
                             value="{{ old('pesel', $user->pesel) }}"/>
                         @error('pesel')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class='form-group'>
+                        <label for="avatar">Wybierz avatar...</label>
+                        <input
+                            type="file"
+                            class="form-control-file"
+                            id="avatar"
+                            name="avatar"
+                            accept="image/*"
+                            />
+                        @error('avatar')
+                            <div class='invalid-feedback d-block'>{{$message}}</div>
                         @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Zapisz dane</button>

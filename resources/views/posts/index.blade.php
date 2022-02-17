@@ -23,36 +23,36 @@
         @foreach ($posts as  $post)
             @if (!$loop->first)
                 <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                    <div class="card-body d-flex flex-column align-items-start">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-300">
+                        <div class="card-body d-flex flex-column align-items-start">
 
-                        <h3 class="mb-0">
-                        <a class="text-dark" href="{{ route('dashboard.show',$post->id) }}">{{$post->title}}</a>
-                        </h3>
-                        <div class="mb-1 text-muted">
-                            @php
-                                $m_en = array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-                                $m_pol = array("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień");
-                                $data = str_replace($m_en, $m_pol, $post->created_at->format('M d'));
-                            @endphp
-                           Dodano: {{$data }}
+                            <h3 class="mb-0">
+                            <a class="text-dark" href="{{ route('dashboard.show',$post->id) }}">{{$post->title}}</a>
+                            </h3>
+                            <div class="mb-1 text-muted">
+                                @php
+                                    $m_en = array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+                                    $m_pol = array("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień");
+                                    $data = str_replace($m_en, $m_pol, $post->created_at->format('M d'));
+                                @endphp
+                            Dodano: {{$data }}
+                            </div>
+                            <div class="mb-1 text-muted">
+                                @php
+                                $shortDescp= substr($post->description,0,140);
+                                @endphp
+                                        {{$shortDescp}}...
+                            </div>
+
+                            <div class="text-dark">
                         </div>
-                        <div class="mb-1 text-muted">
-                            @php
-                            $shortDescp= substr($post->description,0,200);
-                            @endphp
-                                    {{$shortDescp}}...
+
+                                <a href="{{ route('dashboard.show',$post->id) }}">Czytaj dalej...</a>
+
+                            {{-- <a href="{{route('me.edit',$user->id)}}">Edytuj profil</a> --}}
                         </div>
-
-                        <div class="text-dark">
-                    </div>
-
-                            <a href="{{ route('dashboard.show',$post->id) }}">Czytaj dalej...</a>
-
-                        {{-- <a href="{{route('me.edit',$user->id)}}">Edytuj profil</a> --}}
-                    </div>
-                    <img class="card-img-right flex-auto d-none d-md-block"  alt="Brak zdjęcia" style="width: 300px; height: 250px;"
-                        src="{{ URL::asset("uploads/{$post->image_path}")}}" data-holder-rendered="true">
+                        <img class="card-img-right flex-auto d-none d-md-block"  alt="Brak zdjęcia" style="width: 300px; height: 250px; object-fit: cover;"
+                            src="{{ URL::asset("uploads/{$post->image_path}")}}" data-holder-rendered="true">
                     </div>
                 </div>
             @endif

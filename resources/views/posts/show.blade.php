@@ -32,7 +32,7 @@
                     </section>
                 </article>
                     <div class="row ml-2">
-                        <a href="{{ route('dashboard.index') }}" >Powrót</a>
+                        <a href="{{ route('mainPage') }}" >Powrót</a>
                     </div>
             </div>
         </div>

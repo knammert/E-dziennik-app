@@ -29,11 +29,11 @@ class UpdateUserProfile extends FormRequest
     {
         $userId = Auth::id();
         return [
-            'email' => [
-                'required',
-                Rule::unique('users')->ignore($userId),
-                'email'
-            ],
+            // 'email' => [
+            //     'required',
+            //     Rule::unique('users')->ignore($userId),
+            //     'email'
+            // ],
             'name' => [
                 'required',
             ],
@@ -45,19 +45,22 @@ class UpdateUserProfile extends FormRequest
                  Rule::unique('users')->ignore($userId),
 
             ],
+            'avatar' => [
+                'mimes:jpg,bmp,png'
+            ]
         ];
     }
 
     public function messages()
     {
         return [
-            'email.unique' => 'Podany adres email jest zajęty',
+            // 'email.unique' => 'Podany adres email jest zajęty',
             'pesel.unique' => 'Podany numer PESEL jest zajęty',
             'pesel.digits' => 'Podano błędny numer PESEL',
             'pesel.required' => 'Pole jest wymagane',
             'name.required' => 'Pole jest wymagane',
             'surname.required' => 'Pole jest wymagane',
-            'email.required' => 'Pole jest wymagane'
+            // 'email.required' => 'Pole jest wymagane'
         ];
     }
 }

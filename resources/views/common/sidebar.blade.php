@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="{{ route('dashboard.index') }}">
+        <a class="nav-link" href="{{ route('mainPage') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Panel główny</span></a>
     </li>
@@ -42,28 +42,28 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Usuwanie konta</span></a>
     </li> --}}
-
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Zarządzanie profilem</span>
+        </a>
+        <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('me.index') }}">Mój profil</a>
+                <a class="collapse-item" href="{{route('me.edit',Auth::user()->id)}}">Edycja danych</a>
+                <a class="collapse-item" href="{{ route('changePasswordIndex') }}">Zmiana hasła</a>
+                <a class="collapse-item" href="{{ route('deleteAccountIndex') }}">Usuwanie konta</a>
+        </div>
+    </li>
 
     {{-- UCZEŃ --}}
     <div class="sidebar-heading">
         Uczeń
     </div>
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-            aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Zarządzanie profilem</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('me.index') }}">Mój profil</a>
-                <a class="collapse-item" href="{{ route('me.index') }}">Edycja danych</a>
-                <a class="collapse-item" href="{{ route('me.index') }}">Zmiana hasła</a>
-                <a class="collapse-item" href="{{ route('me.index') }}">Usuwanie konta</a>
-        </div>
-    </li>
+
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('studentPanel.grades.index') }}">

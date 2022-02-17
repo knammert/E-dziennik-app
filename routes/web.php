@@ -5,6 +5,8 @@ use App\Http\Controllers\TeacherGradeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+use function Ramsey\Uuid\v1;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,11 +20,22 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
+Route::get('/', function () {
+    return redirect()->route('mainPage');
+});
+
 //Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']], function() {
 
-    Route::resource('me', 'meController');
-    Route::get('calendar', 'CalendarController@index')->name('calendarIndex');
+
+    Route::resource('me', 'MeController');
+    Route::get('changePasswordIndex', 'MeController@changePasswordIndex')->name('changePasswordIndex');
+    Route::put('changePassword', 'MeController@changePassword')->name('changePassword');
+
+    Route::get('deleteAccountIndex', 'MeController@destroyAccountIndex')->name('deleteAccountIndex');
+    Route::put('deleteAccount', 'MeController@destroy')->name('deleteAccount');
+
+
 
     Route::group([
         'prefix' => 'adminPanel',
@@ -50,14 +63,13 @@ Route::group(['middleware' => ['auth']], function() {
     });
 
     Route::resource('dashboard', 'PostController');
+    Route::get('dashboard', 'PostController@index')->name('mainPage');
     Route::get('dashboard/{id}', 'PostController@show');
     Route::post('dashboard/{id}', 'PostController@destroy');
 
-
-
     Route::resource('users', UserController::class);
 
-
     Route::get('changeStudentList/{id}', 'TeacherGradeController@changeStudentList');
+    Route::get('calendar', 'CalendarController@index')->name('calendarIndex');
 
 });
