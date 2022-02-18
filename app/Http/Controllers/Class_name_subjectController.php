@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Class_name;
 use App\Models\Class_name_subject;
+use App\Models\Schedule;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -54,15 +55,30 @@ class Class_name_subjectController extends Controller
             'class_name_id' => 'required',
             'subject_id' => 'required',
             'user_id' => 'required',
-            'weekday' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required'
+            // 'weekday' => 'required',
+            // 'start_time' => 'required',
+            // 'end_time' => 'required'
         ]);
 
         Class_name_subject::create($request->all());
 
         return redirect()->route('adminPanel.activities.index')
             ->with('status', 'Pomyślnie utworzono nowe zajęcia');
+    }
+
+    public function storeSchedule(Request $request)
+    {
+        $request->validate([
+            'class_name_subject_id' => 'required',
+            'weekday' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required'
+        ]);
+
+        Schedule::create($request->all());
+
+        return redirect()->route('adminPanel.activities.index')
+            ->with('status', 'Pomyślnie utworzono nowe zajęcia w kalendarzu');
     }
 
     /**

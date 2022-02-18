@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Class_name_subject;
+use App\Models\Schedule;
 
 class CalendarService
 {
@@ -10,7 +11,7 @@ class CalendarService
     {
         $calendarData = [];
         $timeRange = (new TimeService)->generateTimeRange(config('app.calendar.start_time'), config('app.calendar.end_time'));
-        $lessons   = Class_name_subject::with('class_name', 'user')
+        $lessons   = Schedule::with('class_name_subject')
            ->calendarByRoleOrClassId()
            ->get();
 
@@ -26,10 +27,10 @@ class CalendarService
                 if ($lesson)
                 {
                     array_push($calendarData[$timeText], [
-                        'class_name'   => $lesson->class_name->name,
-                        'subject_name' => $lesson->subject->name,
-                        'teacher_name' => $lesson->user->name,
-                        'teacher_surname' => $lesson->user->surname,
+                        'class_name'   => $lesson->class_name_subject->class_name->name,
+                        'subject_name' => $lesson->class_name_subject->subject->name,
+                        'teacher_name' => $lesson->class_name_subject->user->name,
+                        'teacher_surname' => $lesson->class_name_subject->user->surname,
                         'rowspan'      => $lesson->difference/45 ?? ''
                     ]);
                 }

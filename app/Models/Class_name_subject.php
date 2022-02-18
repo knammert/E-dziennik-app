@@ -9,6 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class Class_name_subject extends Model
 {
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($class_name_subject) { // before delete() method call this
+             $class_name_subject->schedule()->delete();
+             // do the rest of the cleanup...
+        });
+
+        static::deleting(function($class_name_subject) { // before delete() method call this
+            $class_name_subject->grade()->delete();
+            // do the rest of the cleanup...
+       });
+    }
+
+
+
     use HasFactory;
     protected $fillable = [
         'class_name_id',
@@ -50,6 +66,11 @@ class Class_name_subject extends Model
     public function grade()
     {
         return $this->hasMany(Grade::class);
+    }
+
+    public function schedule()
+    {
+        return $this->hasMany(Schedule::class);
     }
 
 

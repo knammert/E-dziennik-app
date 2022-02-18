@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('subjects', 'SubjectController');
         Route::resource('class_names', 'Class_nameController');
         Route::resource('activities', 'Class_name_subjectController');
+        Route::post('storeSchedule', 'Class_name_subjectController@storeSchedule')->name('storeSchedule');
 
         Route::get('users', 'UserController@index');
     });
