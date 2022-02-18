@@ -31,6 +31,9 @@ class UpdateUserByAdminRequest extends FormRequest
             'role' => [
                 'required',
             ],
+            'class_name_id' => [
+
+            ],
 
         ];
     }

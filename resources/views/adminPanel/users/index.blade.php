@@ -74,7 +74,7 @@
                     <td class="row">
                         <a
                         type="submit"
-                        class="btn btn-warning mr-1"
+                        class="btn btn-warning mr-1 editModal"
                         data-toggle="modal"
                         data-target="#editUserModal-{{$user->id}}">
                         Edytuj
@@ -118,8 +118,8 @@
                                 @method('PUT')
                                 <div class="form-group">
                                     <strong>Rola:</strong>
-                                    <select type="text" name="role" id="role" class="form-control">
-                                        <option @if ($user->role =='0') selected @endif value="1">Brak roli</option>
+                                    <select type="text" name="role" id="role" class="form-control role">
+                                        <option @if ($user->role =='0') selected @endif value="0">Brak roli</option>
                                         <option @if ($user->role =='1') selected @endif value="1">Uczeń</option>
                                         <option @if ($user->role =='2') selected @endif value="2">Nauczyciel</option>
                                         <option @if ($user->role =='3') selected @endif value="3">Administrator</option>
@@ -129,9 +129,9 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group class_name_id">
                                     <strong>Klasa:</strong>
-                                    <select type="text" name="class_name_id" id="class_name_id" class="form-control">
+                                    <select type="text" name="class_name_id" id="class_name_id" class="form-control class_name_id">
                                         <option @if ($user->class_name_id =='0') selected @endif value="0">Brak klasy</option>
                                         @foreach ($classes as $class )
                                             <option @if ($user->class_name_id == $class->id) selected @endif value="{{$class->id}}">{{$class->name}}</option>
@@ -153,17 +153,4 @@
             </div>
         </div>
         @endforeach
-        <script>
-            document.getElementById('class_name_id').disabled = true;
-
-        $('#role').on('change', function() {
-            var role_id = $(this).val();
-            document.getElementById('class_name_id').disabled = true;
-            console.log('xd');
-            if(role_id == 1){
-                document.getElementById('class_name_id').disabled = false;
-            }
-
-        });
-        </script>
     @endsection

@@ -40,7 +40,7 @@ class TeacherGradeController extends Controller
 
          if ($type != 'default') {
              $activity = Class_name_subject::find($type);
-             $users = User::orderBy('surname')
+             $users = User::groupBy('surname')
              ->where('class_name_id', $activity->class_name_id)
              ->paginate(10);
 
@@ -58,7 +58,7 @@ class TeacherGradeController extends Controller
                 ->route('me.index')->with('status', 'Brak dostępnych klas'); }
 
             $users = User:: with('class_name')
-            ->orderBy('surname')
+            ->groupBy('surname')
             ->where('class_name_id', $activity->class_name_id)
             ->paginate(10);
 
@@ -138,9 +138,10 @@ class TeacherGradeController extends Controller
 
         $check = Class_name_subject::where('id',$request->activity_id)->first();
 
-            $user = User::where('id',$request->user_id)->first();
-            $grades = Grade::where('id_user',$request->user_id)
-            ->where('class_name_subject_id',$request->activity_id);
+        $user = User::where('id',$request->user_id)->first();
+        $grades = Grade::where('id_user',$request->user_id)
+        ->where('class_name_subject_id',$request->activity_id);
+
 
 
         return view('teacherPanel.grades.edit',
@@ -191,8 +192,8 @@ class TeacherGradeController extends Controller
 
         $class_id = Class_name_subject::find($activity_id)->class_name;
 
-        $users = User::all()->where('class_name_id','==',$class_id->id);
-
+        $users = User::all()->where('class_name_id','==',$class_id->id)
+;
          return response()->json($users);
     }
 

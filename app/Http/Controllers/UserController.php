@@ -43,13 +43,21 @@ class UserController extends Controller
 
         $data = $request->validated();
 
+
+
+        if($data['role']!=1 && $data['class_name_id']> 0){
+            return redirect()
+            ->route('users.index')
+            ->with('status', 'Tylko uczeń może posiadać klasę!');
+        }
+
         $user->role = $data['role'] ?? $user->role;
         $user->class_name_id = $data['class_name_id'] ?? $user->class_name_id;
         $user->save();
 
         return redirect()
             ->route('users.index')
-            ->with('status', 'Profil został zaktualizowany');
+            ->with('status', 'Użytkownik został zaktualizowany');
     }
 
     public function delete(Request $request)

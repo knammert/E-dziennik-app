@@ -18,7 +18,8 @@
 
                             <select class='custom-select mr-sm-2' name="typeClassId" id="typeClassId" style='width:150px;'>
                                 @foreach ($activities as $activitie)
-                                    <option value="{{$activitie->id}}"> Klasa: {{$activitie->name}}</option>
+
+                                    <option @if ( Request::get('typeClassId')  == $activitie->id) selected @endif value="{{$activitie->id}}"> Klasa: {{$activitie->name}}</option>
                                 @endforeach
                             </select>
                         </div>

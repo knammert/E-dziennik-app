@@ -343,11 +343,6 @@
     @endforeach
 @endforeach
 
-
-
-
-
-
 <!-- Skrypt wczytywania studentów-->
 <script>
 

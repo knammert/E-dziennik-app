@@ -17,12 +17,8 @@ class Class_name_subject extends Model
              // do the rest of the cleanup...
         });
 
-        static::deleting(function($class_name_subject) { // before delete() method call this
-            $class_name_subject->grade()->delete();
-            // do the rest of the cleanup...
-       });
-    }
 
+    }
 
 
     use HasFactory;
