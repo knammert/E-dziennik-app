@@ -29,12 +29,6 @@
             <button class="btn btn-primary" type="sumbit">Wyszukaj</button>
         </div>
     </form>
-
-        <div class="form-row ml-2 ">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                Wystawianie ocen
-            </button>
-        </div>
 </div>
 
         <table class="table shadow-lg p-3 mb-5 bg-white rounded" >

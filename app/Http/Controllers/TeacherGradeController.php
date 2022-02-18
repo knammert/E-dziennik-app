@@ -36,6 +36,8 @@ class TeacherGradeController extends Controller
         $ActiceUser = Auth::user()->id;
         $activities = Class_name_subject::all()->where('user_id','==',$ActiceUser);
 
+
+
          if ($type != 'default') {
              $activity = Class_name_subject::find($type);
              $users = User::orderBy('surname')
@@ -52,6 +54,9 @@ class TeacherGradeController extends Controller
          }
          else {
             $activity = Class_name_subject::where('user_id',$ActiceUser)->first();
+            if($activity==null){return redirect()
+                ->route('me.index')->with('status', 'Brak dostępnych klas'); }
+
             $users = User:: with('class_name')
             ->orderBy('surname')
             ->where('class_name_id', $activity->class_name_id)

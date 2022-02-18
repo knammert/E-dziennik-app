@@ -22,26 +22,6 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    {{-- <!-- Heading -->
-    <div class="sidebar-heading">
-        Profil
-    </div>
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('me.index') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Mój profil</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Zmiana hasła</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Usuwanie konta</span></a>
-    </li> --}}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
             aria-expanded="true" aria-controls="collapseUtilities">
@@ -63,17 +43,10 @@
         Uczeń
     </div>
 
-
-
     <li class="nav-item">
         <a class="nav-link" href="{{ route('studentPanel.grades.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Oceny</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Statystyki</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('calendarIndex') }}">
@@ -88,11 +61,6 @@
         <a class="nav-link" href="{{ route('teacherPanel.grades.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Oceny</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Statystyki</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('calendarIndex') }}">
@@ -130,7 +98,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('calendarIndex') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Plan lekcji</span></a>
     </li>
