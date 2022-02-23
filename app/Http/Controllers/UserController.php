@@ -44,7 +44,6 @@ class UserController extends Controller
         $data = $request->validated();
 
 
-
         if($data['role']!=1 && $data['class_name_id']> 0){
             return redirect()
             ->route('users.index')

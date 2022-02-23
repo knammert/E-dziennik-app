@@ -139,7 +139,7 @@
             @endforeach
         </table>
         <div class="d-flex justify-content-center">
-      {!! $users->links() !!}
+      {!! $users->withQueryString()->links() !!}
         </div>
 
         {{-- Modal oraz skrypty --}}
