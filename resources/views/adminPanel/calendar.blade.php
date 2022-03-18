@@ -43,20 +43,19 @@
             @endphp
             @foreach($calendarData as $time => $days)
                 <tr >
-                    <td class="table-light">
+                    <td style=" height: 80px ;" class="table-light">
                     <b> {{ $time }}</b>
                     @foreach($days as $value)
                         @if (is_array($value))
-                        @php
-                            $i++;
-                            if($i==4 && $value != 1){
-                                $i=0;
-                            }
-                            $background_colors = array('#037bfc', '#fca503', '#b103fc', '#ed6d05', '#fc0356');
-                            $rand_background = $background_colors[$i];
-                        @endphp
-                            <td rowspan="{{ $value['rowspan'] }}" class="align-middle text-center text-white "
-                            style="border-radius: 20px; 40px; background-color:{{$rand_background}}; opacity:0.8;">
+                            <td rowspan="{{ $value['rowspan'] }}" class="align-middle text-center text-white mb-1 "
+                                style="height: 100px ;border-radius: 10px 30px; background-color:{{$background_colors[$i]}}; opacity:0.75;">
+                                    @php
+                                        $i++;
+                                        if($i==7){
+                                            $i=0;
+                                        }
+                                    @endphp
+
                                 Przedmiot: {{ $value['subject_name'] }}<br>
                                 @if (Auth::user()->role == 1)
                                 Nauczyciel: {{ $value['teacher_name']}} {{$value['teacher_surname'] }}

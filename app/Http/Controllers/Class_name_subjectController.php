@@ -18,15 +18,19 @@ class Class_name_subjectController extends Controller
      */
     public function index()
     {
-        $class_name_subjects = Class_name_subject::latest()->paginate(10);
+        $class_name_subjects = Class_name_subject::paginate(10);
+        $class_name_subjects_not_paginated = Class_name_subject::all();
         $class_names = Class_name::all();
         $subjects = Subject::all();
         $users = User::all()->where('role','==','2');
 
 
+
+
         return view('adminPanel.activities.index',
         [
         'class_name_subjects' => $class_name_subjects,
+        'class_name_subjects_not_paginated' => $class_name_subjects_not_paginated,
         'class_names' => $class_names,
         'subjects' => $subjects,
         'users' => $users
@@ -51,13 +55,11 @@ class Class_name_subjectController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'class_name_id' => 'required',
             'subject_id' => 'required',
             'user_id' => 'required',
-            // 'weekday' => 'required',
-            // 'start_time' => 'required',
-            // 'end_time' => 'required'
         ]);
 
         Class_name_subject::create($request->all());

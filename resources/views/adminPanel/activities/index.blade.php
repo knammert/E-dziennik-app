@@ -22,7 +22,6 @@
         </div>
 
 
-
         <table  class="table table-bordered shadow-lg p-3 mb-5 bg-white rounded">
             <tr>
                 <th>Nr</th>
@@ -35,7 +34,7 @@
             </tr>
             @foreach ($class_name_subjects as $class_name_subject)
             <tr>
-                <td>{{ ++$i }}</td>
+                <td>{{ ($class_name_subjects ->currentpage()-1) * $class_name_subjects ->perpage() + $loop->index + 1 }} {{$class_name_subject->id}}</td>
                 <td>{{ $class_name_subject->class_name->name }}</td>
                 <td>{{ $class_name_subject->subject->name }}</td>
                 <td>{{ $class_name_subject->user->name }} {{ $class_name_subject->user->surname }}</td>
@@ -110,44 +109,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <strong>Dzień tygodnia:</strong>
-                                        <select
-                                            type="text"
-                                            class="form-control @error('weekday') is-invalid @enderror"
-                                            id="weekday"
-                                            name="weekday">
-                                            <option value="1">Poniedziałek</option>
-                                            <option value="2">Wtorek</option>
-                                            <option value="3">Środa</option>
-                                            <option value="4">Czawartek</option>
-                                            <option value="5">Piątek</option>
-                                            <option value="6">Sobota</option>
-                                            <option value="7">Niedziela</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <strong>Godzina rozpoczęcia:</strong>
-                                        <input class="form-control lesson-timepicker {{ $errors->has('start_time') ? 'is-invalid' : '' }}"
-                                        type="time" name="start_time" id="start_time" value="{{ old('start_time') }}" required>
-                                        @if($errors->has('start_time'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('start_time') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <strong>Godzina zakończenia:</strong>
-                                        <input class="form-control lesson-timepicker {{ $errors->has('end_time') ? 'is-invalid' : '' }}"
-                                        type="time" name="end_time" id="end_time" value="{{ old('end_time') }}" required>
-                                        @if($errors->has('end_time'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('end_time') }}
-                                            </div>
-                                        @endif
-                                    </div> --}}
-
-
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
                                         <button type="submit" class="btn btn-primary">Dodaj nowe zajęcia</button>
@@ -174,8 +135,8 @@
                                     <div class="form-group">
                                         <strong>Zajęcia:</strong>
                                         <select type="text" name="class_name_subject_id" id="class_name_subject_id" class="form-control">
-                                            @foreach ($class_name_subjects as $subject)
-                                                <option value="{{$subject->id}}">Zajęcia: {{$subject->subject->name}} {{$subject->class_name->name}} z {{$subject->user->name}} {{$subject->user->surname}}</option>
+                                            @foreach ($class_name_subjects_not_paginated as $subject)
+                                                <option value="{{$subject->id}}">Zajęcia: {{$subject->subject->name}} {{$subject->class_name->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -218,7 +179,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                                        <button type="submit" class="btn btn-primary">Dodaj nowe zajęcia</button>
+                                        <button type="submit" class="btn btn-primary">Dodaj do kalendarza</button>
                                     </div>
                             </form>
                     </div>
