@@ -6,6 +6,7 @@ use App\Http\Requests\StoreGradeRequest;
 use App\Models\Class_name_subject;
 use App\Models\Grade;
 use App\Models\User;
+use App\Policies\GradePolicy;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -27,15 +28,17 @@ class TeacherGradeController extends Controller
             // if (! Gate::allows('admin-level')) {
             //     abort(403);
             // }
-        //Metoda 1
+        //Metoda 2
             // Gate::authorize('admin-level');
 
-        $phrase = $request->get('phrase');
-        $type = $request->get('type', 'default');
+        // if ($request->user()->cannot('update', $grade)) {
+        //     abort(403);
+        // }
 
+        $type = $request->get('type', 'default');
+        $this->authorize('viewAnyTeacher', [Grade::class,$type]);
         $ActiceUser = Auth::user()->id;
         $activities = Class_name_subject::all()->where('user_id','==',$ActiceUser);
-
 
 
          if ($type != 'default') {
@@ -97,7 +100,7 @@ class TeacherGradeController extends Controller
      */
     public function store(StoreGradeRequest $request)
     {
-
+        $this->authorize('create', Grade::class);
         $grade = new Grade();
 
         $data = $request->validated();
@@ -160,6 +163,11 @@ class TeacherGradeController extends Controller
      */
     public function update(Request $request, Grade $grade)
     {
+        $this->authorize('update', $grade);
+
+        // if ($request->user()->cannot('update', $grade)) {
+        //     abort(403);
+        // }
 
         $data=$request->validate([
             'grade' => 'required',

@@ -30,9 +30,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create', [
-
-        ]);
+        $this->authorize('create', Post::class);
+        return view('posts.create');
     }
 
     /**
@@ -43,8 +42,8 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $this->authorize('create', Post::class);
         $post = new Post();
-
         $data = $request->validated();
 
         // Załacznik
@@ -109,8 +108,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-
         $post = Post::find($id);
+        $this->authorize('delete', $post);
+
         $filename = $post->image_path;
 
         $path = public_path()."/uploads/".$post->image_path;
@@ -118,6 +118,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('dashboard.index');
+        return redirect()->route('dashboard');
     }
 }

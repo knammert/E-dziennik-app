@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Class_name;
-use App\Models\Class_name_subject;
-use App\Models\Schedule;
-use App\Models\Subject;
 use App\Models\User;
+use App\Models\Subject;
+use App\Models\Schedule;
+use App\Models\Class_name;
 use Illuminate\Http\Request;
+use App\Models\Class_name_subject;
+use Illuminate\Support\Facades\Gate;
 
 class Class_name_subjectController extends Controller
 {
@@ -18,6 +19,8 @@ class Class_name_subjectController extends Controller
      */
     public function index()
     {
+        Gate::authorize('admin-level');
+
         $class_name_subjects = Class_name_subject::paginate(10);
         $class_name_subjects_not_paginated = Class_name_subject::all();
         $class_names = Class_name::all();
@@ -55,7 +58,7 @@ class Class_name_subjectController extends Controller
      */
     public function store(Request $request)
     {
-
+        Gate::authorize('admin-level');
         $request->validate([
             'class_name_id' => 'required',
             'subject_id' => 'required',
@@ -70,6 +73,7 @@ class Class_name_subjectController extends Controller
 
     public function storeSchedule(Request $request)
     {
+        Gate::authorize('admin-level');
         $request->validate([
             'class_name_subject_id' => 'required',
             'weekday' => 'required',
@@ -125,7 +129,7 @@ class Class_name_subjectController extends Controller
      */
     public function destroy($class_name_subject)
     {
-
+        Gate::authorize('admin-level');
         $class_name_subject = Class_name_subject::find($class_name_subject);
 
         $class_name_subject->delete();

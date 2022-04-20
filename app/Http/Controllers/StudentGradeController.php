@@ -17,6 +17,7 @@ class StudentGradeController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAnyStudent', Grade::class);
 
         $class_name_subjects = Class_name_subject::
         whereHas('class_name', function($query) {

@@ -41,7 +41,7 @@ class UpdateUserProfile extends FormRequest
                 'required',
             ],
             'pesel' => [
-                'numeric','digits:9','required',
+                'numeric','digits:11','required',
                  Rule::unique('users')->ignore($userId),
 
             ],

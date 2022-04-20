@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Class_name;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class Class_nameController extends Controller
 {
@@ -14,6 +15,7 @@ class Class_nameController extends Controller
      */
     public function index()
     {
+        Gate::authorize('admin-level');
         $class_names = Class_name::latest()->paginate(10);
 
         return view('adminPanel.class_names.index',compact('class_names'))
@@ -38,6 +40,7 @@ class Class_nameController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('admin-level');
         $request->validate([
             'name' => 'required',
         ]);
@@ -90,6 +93,7 @@ class Class_nameController extends Controller
      */
     public function destroy(Class_name $class_name)
     {
+        Gate::authorize('admin-level');
         $class_name->delete();
 
         return redirect()->route('adminPanel.class_names.index')

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Policies\GradePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,7 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+         'App\Models\Model' => 'App\Policies\ModelPolicy',
+
     ];
 
     /**
@@ -28,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('admin-level', function (User $user){
 
-            if($user->role ==1){
+            if($user->role ==3){
                 return true;
             }
                 return false;
@@ -36,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('teacher-level', function (User $user){
 
-            if($user->role ==1){
+            if($user->role ==2){
                 return true;
             }
                 return false;

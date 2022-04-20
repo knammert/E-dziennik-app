@@ -27,7 +27,6 @@ Route::get('/', function () {
 //Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']], function() {
 
-
     Route::resource('me', 'MeController');
     Route::get('changePasswordIndex', 'MeController@changePasswordIndex')->name('changePasswordIndex');
     Route::put('changePassword', 'MeController@changePassword')->name('changePassword');

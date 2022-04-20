@@ -37,71 +37,77 @@
                 <a class="collapse-item" href="{{ route('deleteAccountIndex') }}">Usuwanie konta</a>
         </div>
     </li>
-
-    {{-- UCZEŃ --}}
-    <div class="sidebar-heading">
-        Uczeń
-    </div>
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('studentPanel.grades.index') }}">
-            <i class="fas fa-book-open"></i>
-            <span>Oceny</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('calendarIndex') }}">
-            <i class="fas fa-calendar"></i>
-            <span>Plan lekcji</span></a>
-    </li>
-    {{-- NAUCZYCIEL --}}
-    <div class="sidebar-heading">
-        Nauczyciel
-    </div>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('teacherPanel.grades.index') }}">
-            <i class="fas fa-book-open"></i>
-            <span>Oceny</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('calendarIndex') }}">
-            <i class="fas  fa-calendar"></i>
-            <span>Plan lekcji</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('dashboard.create') }}">
-            <i class="fas fa-envelope"></i>
-            <span>Tworzenie postów</span></a>
-    </li>
-       {{-- ADMINISTRATOR --}}
-    <div class="sidebar-heading">
-        Administrator
-    </div>
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('adminPanel.') }}">
-            <i class="fas fa-users"></i>
-            <span>Zarządzanie użytkownikami</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-            aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas  fa-folder-open"></i>
-            <span>Zarządzanie lekcjami</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('adminPanel.class_names.index') }}">Klasy</a>
-                <a class="collapse-item" href="{{ route('adminPanel.subjects.index') }}">Przedmioty</a>
-                <a class="collapse-item" href="{{ route('adminPanel.activities.index') }}">Zajęcia</a>
+    @if ( auth()->user()->role == 1)
+        {{-- UCZEŃ --}}
+        <div class="sidebar-heading">
+            Uczeń
         </div>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('calendarIndex') }}">
-            <i class="fas  fa-calendar"></i>
-            <span>Plan lekcji</span></a>
-    </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('studentPanel.grades.index') }}">
+                <i class="fas fa-book-open"></i>
+                <span>Oceny</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('calendarIndex') }}">
+                <i class="fas fa-calendar"></i>
+                <span>Plan lekcji</span></a>
+        </li>
+
+    @endif
+    @if ( auth()->user()->role == 2)
+        {{-- NAUCZYCIEL --}}
+        <div class="sidebar-heading">
+            Nauczyciel
+        </div>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('teacherPanel.grades.index') }}">
+                <i class="fas fa-book-open"></i>
+                <span>Oceny</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('calendarIndex') }}">
+                <i class="fas  fa-calendar"></i>
+                <span>Plan lekcji</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('dashboard.create') }}">
+                <i class="fas fa-envelope"></i>
+                <span>Tworzenie postów</span></a>
+        </li>
+    @endif
+    @if ( auth()->user()->role == 3)
+        {{-- ADMINISTRATOR --}}
+        <div class="sidebar-heading">
+            Administrator
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('adminPanel.') }}">
+                <i class="fas fa-users"></i>
+                <span>Zarządzanie użytkownikami</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas  fa-folder-open"></i>
+                <span>Zarządzanie lekcjami</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('adminPanel.class_names.index') }}">Klasy</a>
+                    <a class="collapse-item" href="{{ route('adminPanel.subjects.index') }}">Przedmioty</a>
+                    <a class="collapse-item" href="{{ route('adminPanel.activities.index') }}">Zajęcia</a>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('calendarIndex') }}">
+                <i class="fas  fa-calendar"></i>
+                <span>Plan lekcji</span></a>
+        </li>
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

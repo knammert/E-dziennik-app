@@ -11,6 +11,7 @@ class CalendarController extends Controller
 {
     public function index(CalendarService $calendarService)
     {
+
         $weekDays     = Class_name_subject::WEEK_DAYS;
         $calendarData = $calendarService->generateCalendarData($weekDays);
         $activities = Class_name::all();

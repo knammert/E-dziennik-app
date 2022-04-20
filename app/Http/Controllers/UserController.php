@@ -14,14 +14,11 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-       // $users = User::latest()->paginate(10);
 
+        $this->authorize('viewAny', User::class);
         $classes = Class_name::all();
-
         $users   = User::usersByRoleOrName()
         ->paginate(10);
-
-
 
         return view('adminPanel.users.index', ['users' => $users, 'classes'=> $classes])
             ->with('i', (request()->input('page', 1) - 1) * 5);;
@@ -40,10 +37,9 @@ class UserController extends Controller
 
     public function update(UpdateUserByAdminRequest $request, User $user)
     {
+        $this->authorize('update', User::class);
 
         $data = $request->validated();
-
-
         if($data['role']!=1 && $data['class_name_id']> 0){
             return redirect()
             ->route('users.index')
@@ -61,14 +57,9 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
+        $this->authorize('viewAny', User::class);
         $user = User::find(Auth::user()->id);
-
-
-         return Redirect::route('/')->with('status', 'Konto zostało usunięte!');
-
+        return Redirect::route('/')->with('status', 'Konto zostało usunięte!');
     }
-
-
-
 
 }
