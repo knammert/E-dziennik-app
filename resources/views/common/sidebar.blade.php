@@ -25,7 +25,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities2"
             aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
+            <i class="fas fa-user"></i>
             <span>Zarządzanie profilem</span>
         </a>
         <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
@@ -45,12 +45,12 @@
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('studentPanel.grades.index') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas fa-book-open"></i>
             <span>Oceny</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('calendarIndex') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas fa-calendar"></i>
             <span>Plan lekcji</span></a>
     </li>
     {{-- NAUCZYCIEL --}}
@@ -59,17 +59,17 @@
     </div>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('teacherPanel.grades.index') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas fa-book-open"></i>
             <span>Oceny</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('calendarIndex') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas  fa-calendar"></i>
             <span>Plan lekcji</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('dashboard.create') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas fa-envelope"></i>
             <span>Tworzenie postów</span></a>
     </li>
        {{-- ADMINISTRATOR --}}
@@ -79,13 +79,13 @@
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('adminPanel.') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas fa-users"></i>
             <span>Zarządzanie użytkownikami</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
             aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
+            <i class="fas  fa-folder-open"></i>
             <span>Zarządzanie lekcjami</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -99,7 +99,7 @@
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('calendarIndex') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas  fa-calendar"></i>
             <span>Plan lekcji</span></a>
     </li>
 

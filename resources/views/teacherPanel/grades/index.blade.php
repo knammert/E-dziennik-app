@@ -12,7 +12,7 @@
 
                     </h5>
                 </div>
-                <div class="float-right row mb-2">
+                <div class="float-right row mb-2 mr-2">
                     <!-- Wyszukiwarka użytkowników -->
                     <form class="form-inline" action="{{ route('teacherPanel.grades.index') }}">
                         <div class="form-row">
