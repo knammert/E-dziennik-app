@@ -73,6 +73,8 @@ class TeacherGradeController extends Controller
             ->groupBy('u.surname')
             ->paginate(10);
          }
+         $included = get_included_files();
+         print_r($included);
         return view('teacherPanel.grades.index',
         [
         'activities' => $activities,

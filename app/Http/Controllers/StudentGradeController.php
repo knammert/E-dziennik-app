@@ -41,16 +41,6 @@ class StudentGradeController extends Controller
             ->groupBy('id')
             ->paginate(10);
 
-
-        // $avgGrades=DB::table(DB::raw('users u'))
-        //     ->select('name','g.grade',DB::raw('IFNULL(SUM(g.grade * g.weight) / SUM(g.weight),NULL) as avg'))
-        //     ->leftJoin(DB::raw('grades g'),function($join) use($activity) {$join->on('u.id','=','g.user_id')
-        //     ->where('g.class_name_subject_id','=', $activity->id); })
-        //     ->where('u.class_name_id','=',$activity->class_name_id)
-        //     ->groupBy('u.surname')
-        //     ->paginate(5);
-
-
         return view('studentPanel.grades.index',
         [
             'class_name_subjects'=>$class_name_subjects,

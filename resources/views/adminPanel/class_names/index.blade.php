@@ -58,7 +58,7 @@
                     <form action="{{ route('adminPanel.class_names.destroy',$class_name->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Usuń klasę</button>
+                        <button type="submit" class="btn text-danger">Usuń klasę</button>
                     </form>
                 </td>
             </tr>

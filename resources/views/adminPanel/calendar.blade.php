@@ -43,12 +43,12 @@
             @endphp
             @foreach($calendarData as $time => $days)
                 <tr >
-                    <td style=" height: 80px ;" class="table-light">
+                    <td style=" height: 40px ;" class="table-light">
                     <b> {{ $time }}</b>
                     @foreach($days as $value)
                         @if (is_array($value))
                             <td rowspan="{{ $value['rowspan'] }}" class="align-middle text-center text-white mb-1 "
-                                style="height: 100px ;border-radius: 10px 30px; background-color:{{$background_colors[$i]}}; opacity:0.75;">
+                                style="height: 80px ;border-radius: 10px 30px; background-color:{{$background_colors[$i]}}; opacity:0.75;">
                                     @php
                                         $i++;
                                         if($i==7){
@@ -58,12 +58,12 @@
 
                                 Przedmiot: {{ $value['subject_name'] }}<br>
                                 @if (Auth::user()->role == 1)
-                                Nauczyciel: {{ $value['teacher_name']}} {{$value['teacher_surname'] }}
+                                    Nauczyciel: {{ $value['teacher_name']}} {{$value['teacher_surname'] }}
                                 @elseif ((Auth::user()->role == 2))
-                                Klasa: {{ $value['class_name']}}
+                                    Klasa: {{ $value['class_name']}}
                                 @else
-                                Nauczyciel: {{ $value['teacher_name']}} {{$value['teacher_surname'] }}
-                                Klasa: {{ $value['class_name']}}<br>
+                                    Nauczyciel: {{ $value['teacher_name']}} {{$value['teacher_surname'] }}
+                                    Klasa: {{ $value['class_name']}}<br>
                                 @endif
                             </td>
                         @elseif ($value === 1)

@@ -18,7 +18,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->paginate(5);
-
+        $included = get_included_files();
+        print_r($included);
         return view('posts.index',compact('posts'))
              ->with('i', (request()->input('page', 1) - 1) * 5);
     }

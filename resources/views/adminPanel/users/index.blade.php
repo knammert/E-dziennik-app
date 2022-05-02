@@ -74,7 +74,7 @@
                     <td class="row">
                         <a
                         type="submit"
-                        class="btn btn-warning mr-1 editModal"
+                        class="btn text-warning mr-1 editModal"
                         data-toggle="modal"
                         data-target="#editUserModal-{{$user->id}}">
                         Edytuj
@@ -83,7 +83,7 @@
                         <form action="{{ route('adminPanel.subjects.index',$user->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Usuń</button>
+                            <button type="submit" class="btn text-danger">Usuń</button>
                         </form>
                     </td>
                 </tr>
