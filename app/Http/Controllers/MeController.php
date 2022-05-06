@@ -137,7 +137,6 @@ class MeController extends Controller
 
     public function changePassword(Request $request)
     {
-
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
             'new_password' => ['required'],

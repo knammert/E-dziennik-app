@@ -128,7 +128,6 @@ class Class_name_subjectController extends Controller
     {
         Gate::authorize('admin-level');
         $class_name_subject = Class_name_subject::find($class_name_subject);
-
         $class_name_subject->delete();
 
         return redirect()->route('adminPanel.activities.index')

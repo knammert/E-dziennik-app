@@ -108,9 +108,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $this->authorize('delete', $post);
-
         $filename = $post->image_path;
-
         $path = public_path()."/uploads/".$post->image_path;
         unlink($path);
 

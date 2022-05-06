@@ -21,7 +21,7 @@ class TeacherGradeController extends Controller
     {
 
         $type = $request->get('type', 'default');
-        $this->authorize('viewAnyTeacher', [Grade::class,$type]);
+        $this->authorize('viewAnyTeacher', [Grade::class, $type]);
 
         $activeUser = Auth::user()->id;
         $activities = Class_name_subject::all()->where('user_id','==',$activeUser);
@@ -31,7 +31,6 @@ class TeacherGradeController extends Controller
         $users = User::groupBy('surname')
             ->where('class_name_id', $currentActivity->class_name_id)
             ->paginate(10);
-
 
         return view('teacherPanel.grades.index',
         [
@@ -95,16 +94,11 @@ class TeacherGradeController extends Controller
      * @param  \App\Models\Grade  $grade
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grade $grade,Request $request)
+    public function edit(Request $request)
     {
-
-        $check = Class_name_subject::where('id',$request->activity_id)->first();
-
         $user = User::where('id',$request->user_id)->first();
         $grades = Grade::where('id_user',$request->user_id)
         ->where('class_name_subject_id',$request->activity_id);
-
-
 
         return view('teacherPanel.grades.edit',
         [
@@ -124,10 +118,6 @@ class TeacherGradeController extends Controller
     {
         $this->authorize('update', $grade);
 
-        // if ($request->user()->cannot('update', $grade)) {
-        //     abort(403);
-        // }
-
         $data=$request->validate([
             'grade' => 'required',
             'weight' => 'required',
@@ -142,7 +132,7 @@ class TeacherGradeController extends Controller
         $grade->save();
 
         return redirect()->route('teacherPanel.grades.index')
-                         ->with('status', 'Ocenna została zedytoowana pomyślnie');
+            ->with('status', 'Ocenna została zedytoowana pomyślnie');
     }
 
     /**
@@ -158,13 +148,10 @@ class TeacherGradeController extends Controller
     public function changeStudentList($activity_id){
 
         $class_id = Class_name_subject::find($activity_id)->class_name;
+        $users = User::all()->where('class_name_id','==',$class_id->id);
 
-        $users = User::all()->where('class_name_id','==',$class_id->id)
-;
          return response()->json($users);
     }
-
-
 
 }
 

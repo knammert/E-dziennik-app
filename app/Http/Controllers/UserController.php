@@ -55,12 +55,10 @@ class UserController extends Controller
             ->with('status', 'Użytkownik został zaktualizowany');
     }
 
-    public function delete(Request $request)
+    public function destroy(User $user)
     {
-        $this->authorize('viewAny', User::class);
-        $user = User::find(Auth::user()->id);
         $user->delete();
-        return Redirect::route('/')->with('status', 'Konto zostało usunięte!');
+        return Redirect::route('users.index')->with('status', 'Konto zostało usunięte!');
     }
 
 }

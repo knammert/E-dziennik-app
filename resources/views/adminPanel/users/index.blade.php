@@ -80,7 +80,7 @@
                         Edytuj
                     </a>
 
-                        <form action="{{ route('adminPanel.subjects.index',$user->id) }}" method="POST">
+                        <form action="{{ route('users.destroy',$user->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn text-danger">Usuń</button>
