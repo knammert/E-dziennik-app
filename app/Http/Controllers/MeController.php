@@ -80,10 +80,7 @@ class MeController extends Controller
     public function update(UpdateUserProfile $request, User $user)
     {
         $user = Auth::user();
-
         $data = $request->validated();
-
-
         if (!empty($data['avatar'])) {
 
             $path = $data['avatar']->store('avatars', 'public');
@@ -148,8 +145,8 @@ class MeController extends Controller
         ]);
 
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-
         Auth::logout();
+
          return Redirect::route('me.index')->with('status', 'Hasło zostało zmienione!');
 
     }

@@ -6,13 +6,9 @@ use App\Http\Requests\StoreGradeRequest;
 use App\Models\Class_name_subject;
 use App\Models\Grade;
 use App\Models\User;
-use App\Policies\GradePolicy;
+use App\Services\TeacherGradesService;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
 
 class TeacherGradeController extends Controller
 {
@@ -21,52 +17,27 @@ class TeacherGradeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, TeacherGradesService $teacherGradesService)
     {
 
         $type = $request->get('type', 'default');
         $this->authorize('viewAnyTeacher', [Grade::class,$type]);
-        $ActiceUser = Auth::user()->id;
-        $activities = Class_name_subject::all()->where('user_id','==',$ActiceUser);
 
+        $activeUser = Auth::user()->id;
+        $activities = Class_name_subject::all()->where('user_id','==',$activeUser);
+        $currentActivity = $teacherGradesService->getCurrentActivity($type, $activeUser);
 
-         if ($type != 'default') {
-             $activity = Class_name_subject::find($type);
-             $users = User::groupBy('surname')
-             ->where('class_name_id', $activity->class_name_id)
-             ->paginate(10);
-
-            $avgGrades=DB::table(DB::raw('users u'))
-            ->select('name','g.grade',DB::raw('IFNULL(SUM(g.grade * g.weight) / SUM(g.weight),NULL) as avg'))
-            ->leftJoin(DB::raw('grades g'),function($join) use($activity) {$join->on('u.id','=','g.user_id')
-            ->where('g.class_name_subject_id','=', $activity->id); })
-            ->where('u.class_name_id','=',$activity->class_name_id)
-            ->groupBy('u.surname')
-            ->paginate(10);
-         }
-         else {
-            $activity = Class_name_subject::where('user_id',$ActiceUser)->first();
-            if($activity==null){return redirect()
-                ->route('me.index')->with('status', 'Brak dostępnych klas'); }
-
-            $users = User:: with('class_name')
-            ->groupBy('surname')
-            ->where('class_name_id', $activity->class_name_id)
+        $avgGrades = $teacherGradesService->generateAvgGrades($currentActivity);
+        $users = User::groupBy('surname')
+            ->where('class_name_id', $currentActivity->class_name_id)
             ->paginate(10);
 
-            $avgGrades=DB::table(DB::raw('users u'))
-            ->select('name','g.grade',DB::raw('IFNULL(SUM(g.grade * g.weight) / SUM(g.weight),NULL) as avg'))
-            ->leftJoin(DB::raw('grades g'),function($join) use($activity) {$join->on('u.id','=','g.user_id')
-            ->where('g.class_name_subject_id','=', $activity->id); })
-            ->where('u.class_name_id','=',$activity->class_name_id)
-            ->groupBy('u.surname')
-            ->paginate(10);
-         }
+
         return view('teacherPanel.grades.index',
         [
         'activities' => $activities,
         'users' => $users,
-        'activity'=> $activity,
+        'activity'=> $currentActivity,
         'avgGrades'=>$avgGrades
         ])  ->with('i', (request()->input('page', 1) - 1) * 5);
     }

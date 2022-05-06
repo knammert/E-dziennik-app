@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Class_name_subject;
 use App\Models\Grade;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Class_name_subject;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Services\StudentGradesService;
 
 class StudentGradeController extends Controller
 {
@@ -15,7 +16,7 @@ class StudentGradeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(StudentGradesService $studentGradesService)
     {
         $this->authorize('viewAnyStudent', Grade::class);
 
@@ -26,20 +27,7 @@ class StudentGradeController extends Controller
         ->groupBy('id')
         ->paginate(10);
 
-        $activeUser = Auth::user()->id;
-        $activeClass = Auth::user()->class_name_id;
-
-
-
-        $avgGrades=DB::table(DB::raw('class_name_subjects c'))
-            ->select('c.id',DB::raw('IFNULL(SUM(g.grade * g.weight) / SUM(g.weight),NULL) as avg'))
-            ->leftJoin(DB::raw('grades g'),function($join) use($activeUser) {
-                $join->on('c.id','=','g.class_name_subject_id')
-                ->where('g.user_id','=', $activeUser);
-            })
-            ->where('class_name_id','=', Auth::user()->class_name_id)
-            ->groupBy('id')
-            ->paginate(10);
+        $avgGrades = $studentGradesService->generateStudentGrades();
 
         return view('studentPanel.grades.index',
         [

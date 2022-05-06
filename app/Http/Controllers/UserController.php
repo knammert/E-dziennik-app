@@ -19,15 +19,6 @@ class UserController extends Controller
         $classes = Class_name::all();
         $users   = User::usersByRoleOrName()
         ->paginate(10);
-        $included = get_included_files();
-        print_r($included);
-
-        function convert($size)
-        {
-            $unit=array('b','kb','mb','gb','tb','pb');
-            return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
-        }
-        echo convert(memory_get_usage(false)); 
 
         return view('adminPanel.users.index', ['users' => $users, 'classes'=> $classes])
             ->with('i', (request()->input('page', 1) - 1) * 5);;
@@ -68,6 +59,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
         $user = User::find(Auth::user()->id);
+        $user->delete();
         return Redirect::route('/')->with('status', 'Konto zostało usunięte!');
     }
 
