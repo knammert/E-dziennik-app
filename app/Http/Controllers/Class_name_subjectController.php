@@ -27,9 +27,6 @@ class Class_name_subjectController extends Controller
         $subjects = Subject::all();
         $users = User::all()->where('role','==','2');
 
-
-
-
         return view('adminPanel.activities.index',
         [
         'class_name_subjects' => $class_name_subjects,

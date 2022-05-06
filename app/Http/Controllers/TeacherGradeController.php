@@ -23,17 +23,6 @@ class TeacherGradeController extends Controller
      */
     public function index(Request $request)
     {
-        //  Test bramek
-        //Metoda 1
-            // if (! Gate::allows('admin-level')) {
-            //     abort(403);
-            // }
-        //Metoda 2
-            // Gate::authorize('admin-level');
-
-        // if ($request->user()->cannot('update', $grade)) {
-        //     abort(403);
-        // }
 
         $type = $request->get('type', 'default');
         $this->authorize('viewAnyTeacher', [Grade::class,$type]);
@@ -73,8 +62,6 @@ class TeacherGradeController extends Controller
             ->groupBy('u.surname')
             ->paginate(10);
          }
-         $included = get_included_files();
-         print_r($included);
         return view('teacherPanel.grades.index',
         [
         'activities' => $activities,
@@ -113,8 +100,7 @@ class TeacherGradeController extends Controller
         $grade->weight = $data['weight'] ;
         $grade->comment = $data['comment'] ;
         $grade->semestr = $data['semestr'] ;
-
-       $grade->save();
+        $grade->save();
 
         return redirect()
             ->route('teacherPanel.grades.index')
