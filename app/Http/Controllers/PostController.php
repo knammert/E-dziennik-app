@@ -18,8 +18,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->paginate(5);
-        $included = get_included_files();
-        print_r($included);
         return view('posts.index',compact('posts'))
              ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -51,12 +49,11 @@ class PostController extends Controller
         $fileName = time().'.'.$request->file->extension();
         $request->file->move(public_path('uploads'), $fileName);
 
-        // User
+        // Save post
         $post->user_id = Auth::user()->id;
         $post->image_path = $fileName;
         $post->title = $data['title'] ;
         $post->description = $data['description'] ;
-
         $post->save();
 
         return redirect()

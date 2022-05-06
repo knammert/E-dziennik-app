@@ -24,7 +24,6 @@ Route::get('/', function () {
     return redirect()->route('mainPage');
 });
 
-//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('me', 'MeController');

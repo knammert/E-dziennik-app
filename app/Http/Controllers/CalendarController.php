@@ -15,8 +15,6 @@ class CalendarController extends Controller
         $calendarData = $calendarService->generateCalendarData($weekDays);
         $activities = Class_name::all();
         $background_colors = array('#037bfc', '#fca503', '#b103fc', '#ed6d05', '#fc0356','#6B8E23','#008B8B');
-        $included = get_included_files();
-        print_r($included);
         return view('adminPanel.calendar', compact('weekDays','calendarData','activities','background_colors'));
     }
 }
